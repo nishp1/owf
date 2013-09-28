@@ -4,26 +4,26 @@
 	<title>Channel Listener</title>
 
 	<g:if test="${params.themeName != null && params.themeName != ''}">
-		<link rel='stylesheet' type='text/css' href='../../../themes/${params.themeName.encodeAsHTML()}.theme/css/${params.themeName.encodeAsHTML()}.css' />
+		<link rel='stylesheet' type='text/css' href='../../../legacy/themes/${params.themeName.encodeAsHTML()}.theme/css/${params.themeName.encodeAsHTML()}.css' />
 	</g:if>
 	<g:else>
-		<link href="../../../js-lib/ext-4.0.7/resources/css/ext-all.css" rel="stylesheet" type="text/css">
+		<link href="../../../legacy/js-lib/ext-4.0.7/resources/css/ext-all.css" rel="stylesheet" type="text/css">
 		<link href="../../../css/dragAndDrop.css" rel="stylesheet" type="text/css">
 	</g:else>
 
-	<script type="text/javascript" src="../../../js-lib/ext-4.0.7/ext-all-debug.js"></script>
+	<script type="text/javascript" src="../../../legacy/js-lib/ext-4.0.7/ext-all-debug.js"></script>
 	<p:javascript src="owf-widget" pathToRoot="../../../" />
 
 	<!-- The widget itself  -->
-	<script type="text/javascript" src="ChannelListenerPanel.js"></script>
+	<script type="text/javascript" src="./ChannelListenerPanel.js"></script>
 	<script type="text/javascript">
          //The location is assumed to be at /<context>/js/eventing/rpc_relay.uncompressed.html if it is not set
          //OWF.relayFile = Ozone.util.contextPath() + '/js/eventing/rpc_relay.uncompressed.html';
 
-		owfdojo.config.dojoBlankHtmlUrl = '../../../js-lib/dojo-1.5.0-windowname-only/dojo/resources/blank.html';
+		owfdojo.config.dojoBlankHtmlUrl = '../../../legacy/js-lib/dojo-1.5.0-windowname-only/dojo/resources/blank.html';
 
 		if (Ext.isIE) {
-			Ext.BLANK_IMAGE_URL = '../../../themes/common/images/s.gif';
+			Ext.BLANK_IMAGE_URL = '../../../legacy/themes/common/images/s.gif';
 		}
 
 		//hack to fix bug with FF

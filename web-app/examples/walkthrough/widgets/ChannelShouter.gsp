@@ -3,21 +3,21 @@
     <head>
         <title>Channel Shouter</title>
         <g:if test="${params.themeName != null && params.themeName != ''}">
-            <link rel='stylesheet' type='text/css' href='../../../themes/${params.themeName.encodeAsHTML()}.theme/css/${params.themeName.encodeAsHTML()}.css' />
+            <link rel='stylesheet' type='text/css' href='../../../legacy/themes/${params.themeName.encodeAsHTML()}.theme/css/${params.themeName.encodeAsHTML()}.css' />
         </g:if>
         <g:else>
-            <link href="../../../js-lib/ext-4.0.7/resources/css/ext-all.css" rel="stylesheet" type="text/css">
+            <link href="../../../legacy/js-lib/ext-4.0.7/resources/css/ext-all.css" rel="stylesheet" type="text/css">
             <link href="../../../css/dragAndDrop.css" rel="stylesheet" type="text/css">
         </g:else>
         
-        <script type="text/javascript" src="../../../js-lib/ext-4.0.7/ext-all-debug.js"></script>
+        <script type="text/javascript" src="../../../legacy/js-lib/ext-4.0.7/ext-all-debug.js"></script>
         <p:javascript src="owf-widget" pathToRoot="../../../" />
         <script type="text/javascript">
 
              //The location is assumed to be at /<context>/js/eventing/rpc_relay.uncompressed.html if it is not set
              //OWF.relayFile = Ozone.util.contextPath() + '/js/eventing/rpc_relay.uncompressed.html';
 
-            owfdojo.config.dojoBlankHtmlUrl =  '../../../js-lib/dojo-1.5.0-windowname-only/dojo/resources/blank.html';
+            owfdojo.config.dojoBlankHtmlUrl =  '../../../legacy/js-lib/dojo-1.5.0-windowname-only/dojo/resources/blank.html';
 
             var scope = this;
             shoutInit = owfdojo.hitch(this, function () {
@@ -109,7 +109,7 @@
                 </script>
                 <input type="text" id="InputChannel" class="widgetFormInput" size="16"/>
                 <span id="dragSource">
-                  <img src="../../../images/widget-icons/ChannelShouter.png"  height="16" width="16" style="vertical-align:middle" alt="Enter a Channel Name and then Drag me"/>
+                  <img src="../../../legacy/themes/common/images/widget-icons/ChannelShouter.png"  height="16" width="16" style="vertical-align:middle" alt="Enter a Channel Name and then Drag me"/>
                 </span>
             </div>
             <br/>

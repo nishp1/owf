@@ -6,16 +6,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Stock Chart</title>
     <g:if test="${params.themeName != null && params.themeName != ''}">
-      <link rel='stylesheet' type='text/css' href='../../../themes/${params.themeName.encodeAsHTML()}.theme/css/${params.themeName.encodeAsHTML()}.css' />
+      <link rel='stylesheet' type='text/css' href='../../../legacy/themes/${params.themeName.encodeAsHTML()}.theme/css/${params.themeName.encodeAsHTML()}.css' />
     </g:if>
     <g:else>
-      <link href="../../../js-lib/ext-4.0.7/resources/css/ext-all.css" rel="stylesheet" type="text/css">
+      <link href="../../../legacy/js-lib/ext-4.0.7/resources/css/ext-all.css" rel="stylesheet" type="text/css">
       <link href="../../../css/dragAndDrop.css" rel="stylesheet" type="text/css">
     </g:else>
-    <script type="text/javascript" src="../../../js-lib/ext-4.0.7/ext-all-debug.js"></script>
+    <script type="text/javascript" src="../../../legacy/js-lib/ext-4.0.7/ext-all-debug.js"></script>
     <p:javascript src="owf-widget" pathToRoot="../../../" />
-	<script type="text/javascript" src="../../../js-lib/patches/LegendItemOverrides.js"></script>
-    <script type="text/javascript" src="StockChart.js"></script>
+	<script type="text/javascript" src="../../../legacy/js-lib/patches/LegendItemOverrides.js"></script>
+    <script type="text/javascript" src="./StockChart.js"></script>
     <script type="text/javascript" src="../chart/theme/accessibility-wob.js"></script>
     <script type='text/javascript'>
       

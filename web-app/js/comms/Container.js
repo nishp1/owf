@@ -16,21 +16,24 @@
 /*global require*/
 define([
     'gadgets/pubsub_router',
+    'config',
     'comms/Comms',
     'comms/Constants',
     'util/Util',
     'util/version',
     'lodash',
     'jquery'
-], function (gadgets, Comms, Constants, Util, Version, _, $) {
+], function (gadgets, Config, Comms, Constants, Util, Version, _, $) {
     'use strict';
 
         var Ozone = Ozone ? Ozone : {};
         Ozone.eventing = Ozone.eventing ? Ozone.eventing : {};
 
         var cbMap = {
-            widgetEventingReady: []
-        }, iframeIds = {}, config = {};
+                widgetEventingReady: []
+            }, 
+            iframeIds = {},
+            options = {};
 
         function containerInit(sender, message) {
             //Handler used by container to parse out incoming initiation messages from gadgets
@@ -72,23 +75,23 @@ define([
             name: 'OWF',
             version: Version.owfversion + Version.eventing,
 
-            init: function (cfg) {
-                config = cfg || {};
+            init: function (opts) {
+                options = opts || {};
 
                 //determine containerRelay
-                this.setContainerRelay(config.containerRelay);
+                this.setContainerRelay(options.containerRelay);
 
                 //setup any widgetEventingReady callbacks
-                if (config.widgetEventingReady != null) {
-                    this.widgetEventingReady(config.widgetEventingReady.fn,config.widgetEventingReady.scope);
+                if (options.widgetEventingReady) {
+                    this.widgetEventingReady(options.widgetEventingReady.fn,options.widgetEventingReady.scope);
                 }
 
                 //check for overrides
-                if (config.getIframeId != null) {
-                    this.getIframeId = $.proxy(config.getIframeId.fn, config.getIframeId.scope);
+                if (options.getIframeId) {
+                    this.getIframeId = $.proxy(options.getIframeId.fn, options.getIframeId.scope);
                 }
-                if (config.getOpenedWidgets != null) {
-                    this.getOpenedWidgets = $.proxy(config.getOpenedWidgets.fn, config.getOpenedWidgets.scope);
+                if (options.getOpenedWidgets) {
+                    this.getOpenedWidgets = $.proxy(options.getOpenedWidgets.fn, options.getOpenedWidgets.scope);
                 }
 
                 //hook containerInit for when widgets initialize with the container
@@ -108,12 +111,12 @@ define([
                 cbMap.widgetEventingReady.push({fn: handler, scope: scope});
             },
             addListener: function (event, handler, scope) {
-                if (cbMap[event] != null) {
+                if (cbMap[event]) {
                     cbMap[event].push({fn: handler, scope: scope});
                 }
             },
             removeListener: function (event, handler, scope) {
-                if (cbMap[event] != null) {
+                if (cbMap[event]) {
                     for (var i = 0; i < cbMap[event].length; i++) {
                         var cb = cbMap[event][i];
                         if (cb.fn == handler && cb.scope == scope) {
@@ -123,7 +126,7 @@ define([
                 }
             },
             clearListeners: function (event) {
-                if (cbMap[event] != null) {
+                if (cbMap[event]) {
                     cbMap[event] = [];
                 }
             },
@@ -150,7 +153,7 @@ define([
             },
 
             getOpenedWidgets: function () {
-                return iframeIds.length != null ? iframeIds : 0;
+                return iframeIds.length ? iframeIds : 0;
             },
 
             /**
@@ -173,9 +176,9 @@ define([
                     owf: true,
                     url: url,
 
-                    //todo these are needed for widget backward compat, when serverConfig is implemented add these back
-//                    webContextPath:Ozone.config.webContextPath,
-//                    preferenceLocation:Ozone.config.prefsLocation,
+                    //these are needed for widget backward compat
+                   webContextPath: Config.webContextPath,
+                   preferenceLocation: Config.prefsLocation,
 
                     //todo figure out if we need the properties below
                     lang: 'en-US',

@@ -5,10 +5,10 @@
 	<title>HTML Viewer</title>
 
 	<g:if test="${params.themeName != null && params.themeName != ''}">
-		<link rel='stylesheet' type='text/css' href='../../../themes/${params.themeName.encodeAsHTML()}.theme/css/${params.themeName.encodeAsHTML()}.css' />
+		<link rel='stylesheet' type='text/css' href='../../../legacy/themes/${params.themeName.encodeAsHTML()}.theme/css/${params.themeName.encodeAsHTML()}.css' />
 	</g:if>
 	<g:else>
-		<link href="../../../js-lib/ext-4.0.7/resources/css/ext-all.css" rel="stylesheet" type="text/css">
+		<link href="../../../legacy/js-lib/ext-4.0.7/resources/css/ext-all.css" rel="stylesheet" type="text/css">
 		<link href="../../../css/dragAndDrop.css" rel="stylesheet" type="text/css">
 	</g:else>
 
@@ -54,13 +54,13 @@
 	</g:if>
 	
 	
-	<script type="text/javascript" src="../../../js-lib/ext-4.0.7/ext-all-debug.js"></script>
+	<script type="text/javascript" src="../../../legacy/js-lib/ext-4.0.7/ext-all-debug.js"></script>
     <p:javascript src="owf-widget" pathToRoot="../../../" />
-    <script type="text/javascript" src="../../../js/components/focusable/Focusable.js"></script>
-    <script type="text/javascript" src="../../../js/components/focusable/FocusableGridPanel.js"></script>
-    <script type="text/javascript" src="../../../js/components/layout/SearchBoxLayout.js"></script>
-    <script type="text/javascript" src="../../../js/components/form/field/SearchBox.js"></script>
-    <script type="text/javascript" src="StockTimer.js"></script>
+    <script type="text/javascript" src="../../../legacy/js/components/focusable/Focusable.js"></script>
+    <script type="text/javascript" src="../../../legacy/js/components/focusable/FocusableGridPanel.js"></script>
+    <script type="text/javascript" src="../../../legacy/js/components/layout/SearchBoxLayout.js"></script>
+    <script type="text/javascript" src="../../../legacy/js/components/form/field/SearchBox.js"></script>
+    <script type="text/javascript" src="./StockTimer.js"></script>
     <script type="text/javascript">
       //The location is assumed to be at /<context>/js/eventing/rpc_relay.uncompressed.html if it is not set
       //OWF.relayFile = Ozone.util.contextPath() + '/js/eventing/rpc_relay.uncompressed.html';
