@@ -1,0 +1,60 @@
+﻿/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@charset "UTF-8";
+
+/* Bootstrap Override Variables */
+
+/* 
+ * Compass cannot support multiple images directories, so we have to override these
+ * two image variables to use theme_image() in common/lib/owf_utils.rb which will
+ * search for them in the theme's images folder, then common/images, and finally
+ * the external libs/images folder found in target during the build.
+ */
+$iconSpritePath: theme-image($theme-name, "glyphicons-halflings.png", true);
+$iconWhiteSpritePath: theme-image($theme-name, "glyphicons-halflings-white.png", true);
+$baseFontSize: 14px !default;
+
+.dropdown-menu {
+    li > a {
+        line-height: 32px;
+    }
+}
+
+.dropdown-menu,
+.btn-group > .btn:first-child,
+.btn-group > .btn:last-child,
+.btn-group > .dropdown-toggle {
+	@include border-radius(0px);
+}
+
+.tooltip-inner {
+	padding-left: 2em;
+	padding-right: 2em;
+}
+
+// modal 
+// -------------------------------------------
+.modal-header {
+    & > h4 {
+        margin: 0;
+    }
+
+    & > button {
+        margin: 0;
+        line-height: $baseFontSize * 1.25;
+    }
+}

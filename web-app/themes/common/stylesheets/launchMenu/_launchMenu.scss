@@ -1,0 +1,91 @@
+
+#launchMenu {
+
+    background: $baseColor;
+    overflow: hidden;
+
+    .modal-body {
+        padding: 0px;
+    }
+
+    .tilesview {
+        overflow: hidden;
+    }
+
+}
+
+.tilesview > .widgetTile {
+    float: left;
+    margin: 10px;
+    padding: 15px 15px 0px 15px;
+    position: relative;
+    text-align:center;
+    overflow: hidden;
+    min-width: $item-width;
+    max-width: $item-width;
+
+    width: $item-width;
+    height: $item-height;
+
+    outline: none;
+
+    @include border-radius($baseBorderRadius);
+
+    .thumb-wrap {
+        text-align: center;
+        white-space:nowrap;
+        margin-left:auto;
+        margin-right:auto;
+        width: $thumb-width;
+        cursor: move;
+
+        .thumb {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            width: $thumb-width;
+            height: $thumb-height;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    }
+
+    span {
+        display: block;
+        height: $name-height;
+        width: $item-width;
+        margin-top: 2px;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+    }
+
+    &:hover {
+        background-color: $tableBackgroundHover !important;
+    }
+
+    &.selected {
+        background-color: $tableBackgroundHover !important;
+        .widget-name {
+            font-weight: bold;
+        }
+    }
+
+    .btn-group {
+        display: none;
+        position: absolute;
+        top: $item-height/2;
+        left: 0px;
+        width: 100%;
+
+        .btn {
+            @extend .no-border-radius;
+            border: none;
+        }
+    }
+
+    // fixes 1px gap on left and right side of btn-group
+    .btn-group > .btn + .btn {
+        margin-left: 0px;
+    }
+}

@@ -1,0 +1,70 @@
+/*
+ * Copyright 2013 Next Century Corporation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.select2-container,
+.select2-container.select2-drop-above,
+.select2-container.select2-container-disabled {
+
+    .select2-choice {
+        border: 1px solid $inputBorder !important;
+        color: $inputColor;
+
+        &, & div {
+            @include ctb-gradient-vertical($baseColor, darken($baseColor, 5%));
+        }
+        & div {
+            border: none;
+        }
+    }
+}
+
+.select2-container.select2-container-disabled .select2-choice {
+    color: lighten($baseColor, 20%);
+    background: $baseColor;
+}
+
+.select2-dropdown-open .select2-choice{
+    @include box-shadow(0 1px 0 $inputBackground inset);
+}
+.select2-drop.select2-drop-above {
+    border: none;
+}
+
+.select2-drop {
+    background: lighten($inputBackground, 5%);
+    color: $inputColor;
+    border: 1px solid $inputBorder;
+}
+
+// .select2-search {
+//     display: none;
+// }
+
+.select2-results .select2-highlighted {
+    @extend .btn-primary;
+}
+
+.select2-container-active {
+    border: 1px solid $focusColor;
+}
+
+.select2-dropdown-open {
+    border: none;
+}
+
+.select2-search input {
+    background: $inputBackground;
+}

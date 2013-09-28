@@ -1,0 +1,315 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+@charset "UTF-8";
+
+ //pull in base functions and mixins provided by the compass framework
+@import "compass";
+
+// This variable is required.  It must be equal to the name property in the theme.json file.
+$theme-name: "large-text";
+
+// ===============================
+//  Theme Variables 
+// ===============================
+
+$owf-tool-width: 17px;
+$owf-base-color: #222;
+$owf-alt-base-color: #aaa;
+$owf-focus-color: #93E057;
+
+
+$owf-font-size: 12px;
+$owf-toolbar-base-color: #e6e7e8;
+$required-widgets-color: #454F55;
+
+$baseColor: #222;
+$focusColor: red;
+
+$baseBorderRadius:      4px;
+$borderRadiusLarge:     6px;
+$borderRadiusSmall:     3px;
+
+// see: compass_twitter_bootstrap/_navbar.scss.
+// add 1px for the border 
+$navbarHeight: 40px;
+$bannerHeight: $navbarHeight + 1px;
+
+// Grays
+// -------------------------
+$black:                 #000;
+$grayDarker:            #222;
+$grayDark:              #333;
+$gray:                  #555;
+$grayLight:             #999;
+$grayLighter:           #eee;
+$white:                 #fff;
+
+
+// Accent colors
+// -------------------------
+$blue:                  #049cdb;
+$blueDark:              #0064cd;
+$green:                 #46a546;
+$red:                   #9d261d;
+$yellow:                #ffc40d;
+$orange:                #f89406;
+$pink:                  #c3325f;
+$purple:                #7a43b6;
+
+
+// Scaffolding
+// -------------------------
+$bodyBackground:        $white;
+$textColor:             #ccc;
+
+
+// Links
+// -------------------------
+$linkColor:             #08c;
+$linkColorHover:        darken($linkColor, 15%);
+
+
+// Typography
+// -------------------------
+$sansFontFamily:        "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$serifFontFamily:       Georgia, "Times New Roman", Times, serif !default;
+$monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace !default;
+
+$baseFontSize:          14px !default;
+$baseFontFamily:        $sansFontFamily !default;
+$baseLineHeight:        20px !default;
+$altFontFamily:         $serifFontFamily !default;
+
+$headingsFontFamily:    inherit; // empty to use BS default, $baseFontFamily
+$headingsFontWeight:    bold;    // instead of browser default, bold
+$headingsColor:         inherit; // empty to use BS default, $textColor
+
+
+// Tables
+// -------------------------
+$tableBackground:                   transparent; // overall background-color
+$tableBackgroundAccent:             $black; // for striping
+$tableBackgroundHover:              $black; // for hover
+$tableBorder:                       $grayDarker; // table and cell border
+
+
+// Buttons
+// -------------------------
+$btnBackground:                     #444;
+$btnBackgroundHighlight:            $grayDarker;
+$btnBorder:                         #bbb;
+
+$btnPrimaryBackground:              $linkColor;
+$btnPrimaryBackgroundHighlight:     adjust-hue($btnPrimaryBackground, 20%);
+
+$btnInfoBackground:                 #5bc0de;
+$btnInfoBackgroundHighlight:        #2f96b4;
+
+$btnSuccessBackground:              #62c462;
+$btnSuccessBackgroundHighlight:     #51a351;
+
+$btnWarningBackground:              lighten($orange, 15%);
+$btnWarningBackgroundHighlight:     $orange;
+
+$btnDangerBackground:               #ee5f5b;
+$btnDangerBackgroundHighlight:      #bd362f;
+
+$btnInverseBackground:              #444;
+$btnInverseBackgroundHighlight:     $grayDarker;
+
+// Forms
+// -------------------------
+$inputBackground:               darken($baseColor, 2%);
+$inputBorder:                   darken($inputBackground, 5%);
+$inputBorderRadius:             $baseBorderRadius;
+$inputDisabledBackground:       darken($inputBackground, 10%);
+$formActionsBackground:         #f5f5f5;
+$inputHeight:                   $baseLineHeight + 10px; // base line-height + 8px vertical padding + 2px top/bottom border
+
+
+// Tooltips and popovers
+// -------------------------
+$tooltipColor:            #fff;
+$tooltipBackground:       #000;
+$tooltipArrowWidth:       5px;
+$tooltipArrowColor:       $tooltipBackground;
+
+$popoverBackground:       #fff;
+$popoverArrowWidth:       10px;
+$popoverArrowColor:       #fff;
+$popoverTitleBackground:  darken($popoverBackground, 3%);
+
+// Special enhancement for popovers
+$popoverArrowOuterWidth:  $popoverArrowWidth + 1;
+$popoverArrowOuterColor:  rgba(0,0,0,.25);
+
+
+
+// OWF specific variables
+// -------------------------
+$dropBackground: $gray;
+
+#dashboard-container {
+    position: absolute;
+
+    width: 100%;
+    bottom: 0;
+    top: $bannerHeight; //make space for the banner
+}
+
+#dashboard-designer {
+    top: $bannerHeight; //make space for the banner
+}
+
+
+// Put your theme customizations here. If you have many customizations,
+// you may want to put them in a separate file which you import here. 
+// The import statements in this file reference stylesheets from Twitter 
+// Bootstrap and from the themes/common folder.
+
+
+// Note that you MUST define a background here, as the default is to have none.
+// For examples of how to do this, look in the themes that already exist
+
+.no-border-radius {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+}
+
+
+// These styles will be applied to the body of both OWF itself and the admin widgets
+html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
+    -webkit-backface-visibility: hidden;
+    
+    background-image: url('../../common/images/stripes.png'), url('../../common/images/owf_logo.png'), -webkit-radial-gradient(white, #E6E7E8);
+    background-image: url("../../common/images/stripes.png"), url("../../common/images/owf_logo.png"), -moz-radial-gradient(white, #E6E7E8);
+    height: 100%;
+    outline: 0 none;
+    cursor: default;
+    background-attachment: fixed;
+    background-position: center center, center center;
+    background-repeat: repeat, no-repeat, no-repeat;
+}
+
+// These styles will only be applied to the OWf container, not the admin widgets
+#owf-body {
+}
+
+
+// mask used to shim entire document body
+#mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+
+
+
+// fork compass twitter bootstrap
+// and add following as variables
+// -------------------------
+$btnColor: $white;
+$btnColorHover: $grayLighter;
+$btnColorActive: $btnColorHover;
+
+
+$modalBackgrond: $baseColor;
+$modalBorderColor: darken($baseColor, 2%);
+$modalFooterBackground: darken($baseColor, 2%);
+
+$inputColor: $textColor;
+
+
+// Import Compass Twitter Bootstrap and variable overrides.
+@import "bootstrap_overrides";
+@import "compass_twitter_bootstrap_awesome";
+@import "dashboard/main";
+@import "dashboard/all";
+
+
+
+// move to compass twitter bootstrap fork
+// -------------------------
+
+.btn {
+    color: $btnColor;
+    text-shadow: none;
+
+    // Hover state
+      &:hover {
+        color: $btnColorHover;
+    }
+}
+.btn.active,
+.btn-primary.active,
+.btn-warning.active,
+.btn-danger.active,
+.btn-success.active,
+.btn-info.active,
+.btn-inverse.active {
+  color: $btnColorActive;
+}
+
+
+.modal {
+    background: $modalBackgrond;
+}
+.modal-header {
+    border-bottom: 1px solid $modalBorderColor;
+}
+.modal-footer {
+    border-top: 1px solid $modalBorderColor;
+    background: $modalFooterBackground;
+    @include ctb-box-shadow(inset 0 1px 0 $modalFooterBackground);
+}
+
+.close {
+    color: $textColor;
+}
+
+.close:hover {
+    color: $grayLighter;
+}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+  color: $inputColor;
+}

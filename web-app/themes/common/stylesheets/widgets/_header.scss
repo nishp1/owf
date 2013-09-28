@@ -1,0 +1,283 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+$headerHeight: 22px;
+$headerOuterHeight: $headerHeight + $widgetResizableWidth;
+
+$headerSpanHeight: 16px;
+$headerBottomMargin: $widgetResizableWidth;
+
+@mixin activeHeaderBackground {
+    background-color: $widgetActiveBackground;
+
+    $firstGradientColor: #55656d;
+    @include filter-gradient($firstGradientColor, $widgetActiveBackground);
+    background-image: -webkit-linear-gradient($firstGradientColor, $widgetActiveBackground);
+    background-image: -moz-linear-gradient($firstGradientColor, $widgetActiveBackground);
+}
+@mixin inactiveHeaderBackground {
+    background-color: $widgetInactiveBackground;
+
+    $firstGradientColor: #cccfd1;
+    @include filter-gradient($firstGradientColor, $widgetInactiveBackground);
+    background-image: -webkit-linear-gradient($firstGradientColor, $widgetInactiveBackground);
+    background-image: -moz-linear-gradient($firstGradientColor, $widgetInactiveBackground);
+}
+@mixin activeHeaderToolBackground {
+    $firstGradientColor: #8d969b;
+    $secondGradientColor: #4f5e66;
+    $thirdGradientColor: #757f87;
+
+    background-color: $secondGradientColor;
+    @include filter-gradient($firstGradientColor, $secondGradientColor);
+    background-image:-moz-linear-gradient(top, $firstGradientColor 2%, $secondGradientColor 10%, $thirdGradientColor 50%, $secondGradientColor 60%);
+    background-image:-webkit-linear-gradient(top, $firstGradientColor 2%, $secondGradientColor 10%, $thirdGradientColor 50%, $secondGradientColor 60%);
+}
+@mixin inactiveHeaderToolBackground {
+    $firstGradientColor: #a4aaaf;
+    $secondGradientColor: #c1c5c8;
+
+    background-color: $firstGradientColor;
+    @include filter-gradient($firstGradientColor, $secondGradientColor);
+    background-image:-moz-linear-gradient(top, $firstGradientColor 10%, $secondGradientColor 50%, $firstGradientColor 60%);
+    background-image:-webkit-linear-gradient(top, $firstGradientColor 10%, $secondGradientColor 50%, $firstGradientColor 60%);
+}
+@mixin toolHoverBackground {
+    $firstGradientColor: #979fa7;
+    $secondGradientColor: #5b696f;
+
+    background-color: $secondGradientColor;
+    @include filter-gradient($secondGradientColor, $firstGradientColor);
+    background-image:-moz-linear-gradient(top, $firstGradientColor 10%, $secondGradientColor 60%);
+    background-image:-webkit-linear-gradient(top, $firstGradientColor 10%, $secondGradientColor 60%);
+}
+@mixin closeToolHoverBackground {
+    $firstGradientColor: #d85751;
+    $secondGradientColor: #ed98a0;
+    $thirdGradientColor: #d85751;
+
+    background-color: $firstGradientColor;
+    @include filter-gradient($firstGradientColor, $secondGradientColor);
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#a2807f, endColorstr=#d85751);
+    background-image:-moz-linear-gradient(top, $firstGradientColor 10%, $secondGradientColor 50%, $thirdGradientColor 60%);
+    background-image:-webkit-linear-gradient(top, $firstGradientColor 10%, $secondGradientColor 50%, $thirdGradientColor 60%);
+}
+
+.active .header, .active.header {
+    @include activeHeaderBackground;
+    
+    .actions > li {
+        & > a {
+            @include activeHeaderToolBackground;
+
+            border: 1px $gray solid;
+        }
+    }
+}
+
+.minimized .header, .minimized.header {
+    > .actions > .minimize {
+        display: none;
+    }
+
+    > .actions > .restore {
+        display: inline-block;
+    }
+}
+
+.maximized .header, .maximized.header {
+    > .actions > .maximize {
+        display: none;
+    }
+
+    > .actions > .restore {
+        display: inline-block;
+    }
+}
+
+.collapsed .header, .collapsed.header {
+    > .actions > .collapse {
+        display: none;
+    }
+
+    > .actions > .expand {
+        display: inline-block;
+    }
+}
+
+.header {
+    @include inactiveHeaderBackground;
+
+    height: $headerHeight;
+
+    position: relative;
+
+    padding: $widgetResizableWidth;
+    padding-bottom: 0;
+
+    cursor: move;
+
+    img {
+        float: left;
+        height: $headerSpanHeight;
+        width: $headerSpanHeight; // Square ratio, so same as height
+    }
+
+    .name-content {
+        padding: 0 0.5em;
+        line-height: $headerSpanHeight;
+        overflow: hidden;
+
+        span {
+            font-size: $fontSizeSmall;
+
+            &.name {
+                display: inline-block;
+                max-width: 100%;
+
+                border-bottom: none;
+
+                display: inline-block;
+                cursor: pointer;
+
+                color: $widgetActiveColor;
+                font-weight: bold;
+
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space:nowrap;
+            }
+
+            //X-editable overrides
+            &.editable-inline {
+                display: block;
+
+                .editable-input {
+                    display: block;
+                }
+
+                input {
+                    width: 100%;
+                    padding: 0;
+
+                    vertical-align: baseline;
+                    outline-style: none;
+
+                    font-size: $fontSizeSmall;
+                    line-height: normal;
+
+                    height: $headerSpanHeight - 2px; // - 2px to account for borders
+                    border: 1px $widgetActiveColor solid
+                }
+            }
+        }
+    }
+
+    a {
+        cursor: pointer;
+    }
+    .actions {
+        line-height: normal;
+        float: right;
+        white-space: nowrap;
+        margin-top: -1px;
+        margin-bottom: 0px;
+
+        & > li {
+            height: auto;
+            overflow: visible;
+            line-height: normal;
+
+            display: inline-block;
+            
+            margin-left: 3px;
+
+            & > a {
+                @include inactiveHeaderToolBackground;
+
+                color: $widgetActiveColor;
+                border: 1px $grayLight solid;
+
+                text-decoration: none;
+
+                overflow: hidden;
+
+                & > i {
+                    top: 1px;
+                    position: relative;
+                }
+            }
+
+            &.minimize > a > i {
+                top: 5px;
+            }
+
+            &:hover > a {
+                @include toolHoverBackground;
+            }
+
+            &.close-li:hover > a {
+                @include closeToolHoverBackground;
+            }
+        }
+
+        > .restore, > .expand {
+            display: none;
+        }
+    }
+}
+
+.lt-ie8 {
+    .header .actions > li {
+        position: static;
+        display: inline;
+        zoom: 1;
+
+        &.restore, &.expand {
+            display: none;
+        }
+
+        & > a > i {
+            top: 1px;
+        }
+        &.minimize > a > i {
+            top: 5px;
+        }
+    }
+
+    .collapsed .header, .collapsed.header {
+        > .actions > .expand {
+            display: inline;
+            zoom: 1;
+        }
+    }
+    .maximized .header, .maximized.header, .minimized .header, .minimized.header {
+        > .actions > .restore {
+            display: inline;
+            zoom: 1;
+        }
+    }
+}
+.lt-ie9 {
+    .header {
+        //No gradients for IE8 and below for performance
+        filter: none !important;
+
+        .actions > li > a {
+            filter: none !important;
+        }
+    }
+}

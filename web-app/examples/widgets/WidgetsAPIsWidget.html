@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Widgets APIs Widget</title>
+
+        <link rel="stylesheet" href="../../libs/css/bootstrap.css" />
+        <style type="text/css">
+            .hide {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="find-widget-definitions-btn" class="btn">Find Widget Definitions</button>
+
+        <table id="widgets-table" class="table">
+            <thead>
+                <th>Guid</th>
+                <th>Display Name</th>
+                <th>Widget URL</th>
+                <th>Image URL Large</th>
+                <th>Image URL Small</th>
+                <th>Widget Type</th>
+                <th>Universal Name</th>
+                <th>Description</th>
+                <th>Descriptor URL</th>
+                <th>Version</th>
+                <th>Height</th>
+                <th>Width</th>
+                <th>Background</th>
+                <th>Singleton</th>
+                <th>Visible For Launch</th>
+                <th>Sendable Intents</th>
+                <th>Receivable Intents</th>
+                <th>tags</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <label>
+            Guid of Widget to lookup using getWidgetDefinition:<br/>
+            <input type="text" id="widget-guid" />
+        </label>
+        <button id="get-widget-definition-btn" class="btn">Get Specified Widget</button>
+        <dl>
+            <dt>Guid</dt><dd id="guid"></dd>
+            <dt>Display Name</dt><dd id="display-name"></dd>
+            <dt>Widget URL</dt><dd id="widget-url"></dd>
+            <dt>Image URL Large</dt><dd id="image-url-large"></dd>
+            <dt>Image URL Small</dt><dd id="image-url-small"></dd>
+            <dt>Widget Type</dt><dd id="widget-type"></dd>
+            <dt>Universal Name</dt><dd id="universal-name"></dd>
+            <dt>Description</dt><dd id="description"></dd>
+            <dt>Descriptor URL</dt><dd id="descriptor-url"></dd>
+            <dt>Version</dt><dd id="version"></dd>
+            <dt>Height</dt><dd id="height"></dd>
+            <dt>Width</dt><dd id="width"></dd>
+            <dt>Background</dt><dd id="background"></dd>
+            <dt>Singleton</dt><dd id="singleton"></dd>
+            <dt>Visible For Launch</dt><dd id="visible-for-launch"></dd>
+            <dt>Sendable Intents</dt><dd id="sendable-intents"></dd>
+            <dt>Receivable Intents</dt><dd id="receivable-intents"></dd>
+            <dt>tags</dt><dd id="tags"></dd>
+        </dl>
+
+        <div id="error-block" class="alert alert-block hide">
+            <p class="response-code"></p>
+            <p class="response-text"></p>
+        </div>
+
+        <script type="text/javascript" src="../../js-min/owf-widget-debug.js"></script>
+        <script type="text/javascript" src="../../libs/js/jquery.js"></script>
+
+        <script type="text/javascript">
+            var errorBlock = $('#error-block');
+
+            function updateAllWidgets(widgets) {
+                var rows = $.map(widgets, function(w) {
+                    return $('<tr>')
+                        .append($('<td class="guid">').text(w.id))
+                        .append($('<td class="display-name">').text(w.displayName))
+                        .append($('<td class="widget-url">').text(w.widgetUrl))
+                        .append($('<td class="image-url-large">').text(w.imageUrlLarge))
+                        .append($('<td class="image-url-small">').text(w.imageUrlSmall))
+                        .append($('<td class="widget-type">').text(w.widgetType))
+                        .append($('<td class="universal-name">').text(w.universalName))
+                        .append($('<td class="description">').text(w.description))
+                        .append($('<td class="descriptor-url">').text(w.descriptorUrl))
+                        .append($('<td class="version">').text(w.version))
+                        .append($('<td class="height">').text(w.height))
+                        .append($('<td class="width">').text(w.width))
+                        .append($('<td class="background">').text(w.isBackground))
+                        .append($('<td class="singleton">').text(w.isSingleton))
+                        .append($('<td class="visible-for-launch">').text(w.isVisibleForLaunch))
+                        .append($('<td class="sendable-intents">').text(JSON.stringify(w.sendableIntents)))
+                        .append($('<td class="receivable-intents">').text(JSON.stringify(w.receivableIntents)))
+                        .append($('<td class="tags">').text(JSON.stringify(w.tags)))
+                });
+
+                //clear the tbody and repopulate it with the rows
+                $('#widgets-table > tbody').html('').append(rows);               
+            }
+
+            function updateWidget(widg) {
+                $('#guid').text(widg.id);
+                $('#display-name').text(widg.displayName);
+                $('#widget-url').text(widg.widgetUrl);
+                $('#image-url-large').text(widg.imageUrlLarge);
+                $('#image-url-small').text(widg.imageUrlSmall);
+                $('#widget-type').text(widg.widgetType);
+                $('#universal-name').text(widg.universalName);
+                $('#description').text(widg.description);
+                $('#descriptor-url').text(widg.descriptorUrl);
+                $('#version').text(widg.version);
+                $('#height').text(widg.height);
+                $('#width').text(widg.width);
+                $('#background').text(widg.isBackground);
+                $('#singleton').text(widg.isSingleton);
+                $('#visible-for-launch').text(JSON.stringify(widg.isVisibleForLaunch));
+                $('#sendable-intents').text(JSON.stringify(widg.sendableIntents));
+                $('#receivable-intents').text(JSON.stringify(widg.receivableIntents));
+                $('#tags').text(JSON.stringify(widg.tags));
+            }
+
+            function handleError(error) {
+                errorBlock.children('.response-code').text(error.status || '');
+                errorBlock.children('.response-text').text(error.responseText || '');
+                errorBlock.removeClass('hide');
+            }
+            
+
+            $('#find-widget-definitions-btn').click(function() {
+                OWF.Widgets.findWidgetDefinitions()
+                    .done(updateAllWidgets)
+                    .fail(handleError);
+            });
+
+            $('#get-widget-definition-btn').click(function() {
+                OWF.Widgets.getWidgetDefinition({
+                    id: $('#widget-guid').val()
+                }).done(updateWidget).fail(handleError);
+            });
+        </script>
+    </body>
+</html>
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Preferences Legacy Widget</title>
+        <link rel="stylesheet" href="../../libs/css/bootstrap.css">
+
+        <style type="text/css">
+            .hide {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <fieldset id="data-fields">
+            <label>
+                Namespace:<br/>
+                <input type="text" id="namespace-input" />
+            </label>
+            <label>
+                Name:<br/>
+                <input type="text" id="name-input" />
+            </label>
+            <label>
+                Value:<br/>
+                <input type="text" id="value-input" />
+            </label>
+            <label>
+                Current User:<br/>
+                <input type="text" id="user-input" disabled="disabled" />
+            </label>
+        </fieldset>
+        <fieldset id="verbs">
+            <button id="get-btn" data-verb="get" class="btn">Get</button/>
+            <button id="has-btn" data-verb="has" class="btn">Has</button/>
+            <button id="set-btn" data-verb="set" class="btn">Set</button>
+            <button id="delete-btn" data-verb="delete" class="btn">Delete</button>
+        </fieldset>
+
+        <div id="error-block" class="alert alert-block hide">
+            <p class="response-code"></p>
+            <p class="response-text"></p>
+        </div>
+
+        <script type="text/javascript" src="../../js-min/owf-widget-debug.js"></script>
+        <script type="text/javascript" src="../../libs/js/jquery.js"></script>
+
+        <script type="text/javascript">
+            var errorBlock = $('#error-block');
+
+            function update(pref) {
+                if (pref.value) {
+                    errorBlock.addClass('hide');
+
+                    $('#namespace-input').val(pref.namespace);
+                    $('#name-input').val(pref.path);
+                    $('#value-input').val(pref.value);
+                    $('#user-input').val(pref.user.userId);
+
+                }
+                else {
+                    //not found
+                    handleError(JSON.stringify(pref), 404);
+                }
+            }
+
+            function handleError(responseText, status) {
+                errorBlock.children('.response-code').text(status != null ? status : '');
+                errorBlock.children('.response-text').text(responseText != null ? responseText : '');
+                errorBlock.removeClass('hide');
+            }
+
+            OWF.relayFile = 'js/eventing/rpc_relay.uncompressed.html';
+
+            $('#verbs > button').click(function() {
+                var $el = $(this);
+
+                OWF.ready(function() {
+                    if ($el.data('verb') === 'has') {
+                        OWF.Preferences.doesUserPreferenceExist({
+                            namespace: $('#namespace-input').val(),
+                            name: $('#name-input').val(),
+                            onSuccess: function(resp) {
+                                //reuse the error box to report the result
+                                handleError(resp.preferenceExist, resp.statusCode);
+                            }
+                        });
+                    }
+                    else {
+                        OWF.Preferences
+                            [$el.data('verb') + 'UserPreference']({
+                                namespace: $('#namespace-input').val(),
+                                name: $('#name-input').val(),
+                                value: $('#value-input').val(),
+                                onSuccess: update,
+                                onFailure: handleError
+                            });
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
+

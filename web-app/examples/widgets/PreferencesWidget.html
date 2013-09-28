@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Preferences Widget</title>
+        <link rel="stylesheet" href="../../libs/css/bootstrap.css">
+
+        <style type="text/css">
+            .hide {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <fieldset id="data-fields">
+            <label>
+                Namespace:<br/>
+                <input type="text" id="namespace-input" />
+            </label>
+            <label>
+                Name:<br/>
+                <input type="text" id="name-input" />
+            </label>
+            <label>
+                Value:<br/>
+                <input type="text" id="value-input" />
+            </label>
+            <label>
+                Scope:<br/>
+                <select id="scope-select">
+                    <option value="">(Any)</option>
+                    <option value="group">Group</option>
+                    <option value="person">Person</option>
+                </select>
+            </label>
+            <label>
+                Scope Guid:<br/>
+                <input type="text" id="scopeGuid-input"/>
+            </label>
+        </fieldset>
+        <fieldset id="verbs">
+            <button id="get-btn" data-verb="get" class="btn">Get</button/>
+            <button id="set-btn" data-verb="set" class="btn">Set</button>
+            <button id="delete-btn" data-verb="delete" class="btn">Delete</button>
+        </fieldset>
+
+        <div id="error-block" class="alert alert-block hide">
+            <p class="response-code"></p>
+            <p class="response-text"></p>
+        </div>
+
+        <script type="text/javascript" src="../../js-min/owf-widget-debug.js"></script>
+        <script type="text/javascript" src="../../libs/js/jquery.js"></script>
+
+        <script type="text/javascript">
+            var errorBlock = $('#error-block');
+
+            function update(pref) {
+                errorBlock.addClass('hide');
+
+                $('#namespace-input').val(pref.namespace);
+                $('#name-input').val(pref.name);
+                $('#value-input').val(pref.value);
+            }
+
+            function handleError(error) {
+                errorBlock.children('.response-code').text(error.status || '');
+                errorBlock.children('.response-text').text(error.responseText || '');
+                errorBlock.removeClass('hide');
+            }
+
+            OWF.relayFile = 'js/eventing/rpc_relay.uncompressed.html';
+
+            $('#verbs > button').click(function() {
+                var $el = $(this);
+
+                OWF.ready(function() {
+                    OWF.Preferences
+                        [$el.data('verb') + 'Preference']({
+                            namespace: $('#namespace-input').val(),
+                            name: $('#name-input').val(),
+                            value: $('#value-input').val(),
+                            scope: $('#scope-select').val(),
+                            scopeId: $('#scopeGuid-input').val()
+                        })
+                        .done(update)
+                        .fail(handleError);
+                });
+            });
+        </script>
+    </body>
+</html>

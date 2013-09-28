@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Widgets APIs Legacy Widget</title>
+
+        <link rel="stylesheet" href="../../libs/css/bootstrap.css" />
+        <style type="text/css">
+            .hide {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="find-widget-definitions-btn" class="btn">Find Widget Definitions</button>
+
+        <table id="widgets-table" class="table">
+            <thead>
+                <th>Id</th>
+                <th>Namespace</th>
+                <th>Editable</th>
+                <th>Visible</th>
+                <th>Position</th>
+                <th>User Id</th>
+                <th>User Real Name</th>
+                <th>Title</th>
+                <th>Url</th>
+                <th>Header Icon</th>
+                <th>Image</th>
+                <th>Small Icon Url</th>
+                <th>Large Icon Url</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>X</th>
+                <th>Y</th>
+                <th>Minimized</th>
+                <th>Maximized</th>
+                <th>Widget Version</th>
+                <th>Tags</th>
+                <th>Definition Visible</th>
+                <th>Singleton</th>
+                <th>Background</th>
+                <th>All Required</th>
+                <th>Direct Required</th>
+                <th>Widget Types</th>
+                <th>Path</th>
+                <th>Description</th>
+                <th>Descriptor Url</th>
+                <th>Intents</th>
+                <th>Total Groups</th>
+                <th>Total Users</th>
+                <th>Universal Name</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <label>
+            Guid of Widget to lookup using getWidget:<br/>
+            <input type="text" id="widget-guid" />
+        </label>
+        <button id="get-widget-definition-btn" class="btn">Get Specified Widget</button>
+        <dl>
+            <dt>Id</dt><dd id="id"></dd>
+            <dt>Namespace</dt><dd id="namespace"></dd>
+            <dt>Editable</dt><dd id="editable"></dd>
+            <dt>Visible</dt><dd id="visible"></dd>
+            <dt>Position</dt><dd id="position"></dd>
+            <dt>User Id</dt><dd id="user-id"></dd>
+            <dt>User Real Name</dt><dd id="user-real-name"></dd>
+            <dt>Title</dt><dd id="title"></dd>
+            <dt>Url</dt><dd id="url"></dd>
+            <dt>Header Icon</dt><dd id="header-icon"></dd>
+            <dt>Image</dt><dd id="image"></dd>
+            <dt>Small Icon Url</dt><dd id="small-icon-url"></dd>
+            <dt>Large Icon Url</dt><dd id="large-icon-url"></dd>
+            <dt>Width</dt><dd id="width"></dd>
+            <dt>Height</dt><dd id="height"></dd>
+            <dt>X</dt><dd id="x"></dd>
+            <dt>Y</dt><dd id="y"></dd>
+            <dt>Minimized</dt><dd id="minimized"></dd>
+            <dt>Maximized</dt><dd id="maximized"></dd>
+            <dt>Widget Version</dt><dd id="widget-version"></dd>
+            <dt>Tags</dt><dd id="tags"></dd>
+            <dt>Definition Visible</dt><dd id="definition-visible"></dd>
+            <dt>Singleton</dt><dd id="singleton"></dd>
+            <dt>Background</dt><dd id="background"></dd>
+            <dt>All Required</dt><dd id="all-required"></dd>
+            <dt>Direct Required</dt><dd id="direct-required"></dd>
+            <dt>Widget Types</dt><dd id="widget-types"></dd>
+            <dt>Path</dt><dd id="path"></dd>
+            <dt>Description</dt><dd id="description"></dd>
+            <dt>Descriptor Url</dt><dd id="descriptor-url"></dd>
+            <dt>Intents</dt><dd id="intents"></dd>
+            <dt>Total Groups</dt><dd id="total-groups"></dd>
+            <dt>Total Users</dt><dd id="total-users"></dd>
+            <dt>Universal Name</dt><dd id="universal-name"></dd>
+        </dl>
+
+        <div id="error-block" class="alert alert-block hide">
+            <p class="response-code"></p>
+            <p class="response-text"></p>
+        </div>
+
+        <script type="text/javascript" src="../../js-min/owf-widget-debug.js"></script>
+        <script type="text/javascript" src="../../libs/js/jquery.js"></script>
+
+        <script type="text/javascript">
+            var errorBlock = $('#error-block');
+
+            function updateAllWidgets(widgets) {
+                var rows = $.map(widgets, function(w) {
+                    return $('<tr>')
+                        .append($('<td class="id">').text(w.id))
+                        .append($('<td class="namespace">').text(w.namespace))
+                        .append($('<td class="editable">').text(w.value.editable))
+                        .append($('<td class="visible">').text(w.value.visible))
+                        .append($('<td class="position">').text(w.value.position))
+                        .append($('<td class="user-id">').text(w.value.userId))
+                        .append($('<td class="user-real-name">').text(w.value.userRealName))
+                        .append($('<td class="title">').text(w.value.namespace))
+                        .append($('<td class="url">').text(w.value.url))
+                        .append($('<td class="header-icon">').text(w.value.headerIcon))
+                        .append($('<td class="image">').text(w.value.image))
+                        .append($('<td class="small-icon-url">').text(w.value.smallIconUrl))
+                        .append($('<td class="large-icon-url">').text(w.value.largeIconUrl))
+                        .append($('<td class="width">').text(w.value.width))
+                        .append($('<td class="height">').text(w.value.height))
+                        .append($('<td class="x">').text(w.value.x))
+                        .append($('<td class="y">').text(w.value.y))
+                        .append($('<td class="minimized">').text(w.value.minimized))
+                        .append($('<td class="maximized">').text(w.value.maximized))
+                        .append($('<td class="widget-version">').text(w.value.widgetVersion))
+                        .append($('<td class="tags">').text(JSON.stringify(w.value.tags)))
+                        .append($('<td class="definition-visible">').text(w.value.definitionVisible))
+                        .append($('<td class="singleton">').text(w.value.singleton))
+                        .append($('<td class="background">').text(w.value.background))
+                        .append($('<td class="all-required">').text(JSON.stringify(w.value.allRequired)))
+                        .append($('<td class="direct-required">').text(JSON.stringify(w.value.directRequired)))
+                        .append($('<td class="widget-types">').text(JSON.stringify(w.value.widgetTypes)))
+                        .append($('<td class="path">').text(w.path))
+                        .append($('<td class="description">').text(w.value.description))
+                        .append($('<td class="descriptor-url">').text(w.value.descriptorUrl))
+                        .append($('<td class="intents">').text(JSON.stringify(w.value.intents)))
+                        .append($('<td class="total-groups">').text(w.value.totalGroups))
+                        .append($('<td class="total-users">').text(w.value.totalUsers))
+                        .append($('<td class="universal-name">').text(w.value.universalName));
+                });
+
+                //clear the tbody and repopulate it with the rows
+                $('#widgets-table > tbody').html('').append(rows);               
+            }
+
+            function updateWidget(widg) {
+                $('#id').text(widg.id);
+                $('#namespace').text(widg.namespace);
+                $('#editable').text(widg.value.editable);
+                $('#visible').text(widg.value.visible);
+                $('#position').text(widg.value.position);
+                $('#user-id').text(widg.value.userId);
+                $('#user-real-name').text(widg.value.userRealName);
+                $('#title').text(widg.value.namespace);
+                $('#url').text(widg.value.url);
+                $('#header-icon').text(widg.value.headerIcon);
+                $('#image').text(widg.value.image);
+                $('#small-icon-url').text(widg.value.smallIconUrl);
+                $('#large-icon-url').text(widg.value.largeIconUrl);
+                $('#width').text(widg.value.width);
+                $('#height').text(widg.value.height);
+                $('#x').text(widg.value.x);
+                $('#y').text(widg.value.y);
+                $('#minimized').text(widg.value.minimized);
+                $('#maximized').text(widg.value.maximized);
+                $('#widget-version').text(widg.value.widgetVersion);
+                $('#tags').text(JSON.stringify(widg.value.tags));
+                $('#definition-visible').text(widg.value.definitionVisible);
+                $('#singleton').text(widg.value.singleton);
+                $('#background').text(widg.value.background);
+                $('#all-required').text(JSON.stringify(widg.value.allRequired));
+                $('#direct-required').text(JSON.stringify(widg.value.directRequired));
+                $('#widget-types').text(JSON.stringify(widg.value.widgetTypes));
+                $('#path').text(widg.path);
+                $('#description').text(widg.value.description);
+                $('#descriptor-url').text(widg.value.descriptorUrl);
+                $('#intents').text(JSON.stringify(widg.value.intents));
+                $('#total-groups').text(widg.value.totalGroups);
+                $('#total-users').text(widg.value.totalUsers);
+                $('#universal-name').text(widg.value.universalName);
+            }
+
+            function handleError(error) {
+                errorBlock.children('.response-code').text(error.status || '');
+                errorBlock.children('.response-text').text(error.responseText || '');
+                errorBlock.removeClass('hide');
+            }
+            
+
+            $('#find-widget-definitions-btn').click(function() {
+                OWF.Preferences.findWidgets({
+                    onSuccess: updateAllWidgets,
+                    onFailure: handleError
+                });
+            });
+
+            $('#get-widget-definition-btn').click(function() {
+                OWF.Preferences.getWidget({
+                    widgetId: $('#widget-guid').val(),
+                    onSuccess: updateWidget,
+                    onFailure: handleError
+                });
+            });
+        </script>
+    </body>
+</html>
+
+

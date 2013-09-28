@@ -1,0 +1,240 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+$accordionPaneBackground: rgba(#ff4848, 0.1) !default;
+$accordionPaneIE78Background: #ffecec !default;
+
+$desktopPaneBackground: rgba(#ffff00, 0.1) !default;
+$desktopPaneIE78Background: #ffffe5 !default;
+
+$portalPaneBackground: rgba(#0d8900, 0.1) !default;
+$portalPaneIE78Background: #e6f3e5 !default;
+
+$tabbedPaneBackground: rgba(#0068b1, 0.1) !default;
+$tabbedPaneIE78Background: #e5f0f7 !default;
+
+$fitPaneBackground: rgba(#9600C8, 0.1) !default;
+$fitPaneIE78Background: #f4e5f9 !default;
+
+#dashboard-designer {
+	z-index: 10000000;
+
+    background-color: $baseColor;
+    background-image: theme_image($theme-name, "dashboard-designer/background.png");
+    background-repeat: repeat;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+
+    .actions {
+        background: $baseColor;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 3em;
+
+        .btn-group {
+            font-size: $baseFontSize;
+        }
+        .btn {
+            margin-top: 6px;
+        }
+
+        .pull-left {
+            margin-left: 0.5em;
+        }
+        .pull-right {
+            margin-right: 0.5em;
+        }
+    }
+
+    .lock-btn {
+        span {
+            margin-left: 0.25em;
+        }
+    }
+}
+
+.working-area {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+    margin: 0 120px 3em 0;
+    background: transparent;
+
+    > .pane {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .pane {
+        &.highlight, &.focus {
+            background-color: rgba($dropBackground, 0.5) !important;
+        }
+        &.highlight {
+            @include transition(background 0.5s ease-in, opacity 0.5s ease-in);
+        }
+    }
+}
+
+.side-panel {
+    position: absolute;
+    float: right;
+    width: 120px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background: $baseColor;
+
+    & > ul > li {
+        text-align: center;
+        font-size: 2em;
+        padding: 0.25em 0 0.25em 0;
+
+        img {
+            width: 48px;
+            height: 48px;
+        }
+
+        &:focus, &.focus {
+            background: $tableBackgroundHover;
+        }
+
+        &.ui-draggable-dragging {
+            background: transparent !important;
+        }
+    }
+
+    .paneTypes{
+        padding: 0.25em 0 0 0;
+    }
+}
+
+#dashboard-designer {
+    .pane {
+        & > .editable, & > .editable-inline {
+            position: absolute;
+            bottom: 1.25em;
+            left: 40%;
+            width: 4em;
+        }
+
+        & > .editable {
+            line-height: 2em;
+            font-size: 1.25em;
+            border-radius: 0.5em;
+            text-shadow: 0px 0px 2px $textColor;
+            color: $textColor;
+            text-align: center;
+            border: 0.2em dotted $textColor;
+            background: $baseColor;
+        }
+    }
+
+    .accordionpane,
+    .desktoppane,
+    .portalpane,
+    .tabbedpane,
+    .fitpane {
+        background-position: 15px 10px;
+        background-repeat: no-repeat;
+    }
+
+    .tabbedpane {
+        background-color: $tabbedPaneBackground;
+        background-image: theme_image($theme-name, "dashboard-designer/tabbed.png");
+    }
+
+    .accordionpane {
+        background-color: $accordionPaneBackground;
+        background-image: theme_image($theme-name, "dashboard-designer/accordion.png");
+    }
+
+    .desktoppane {
+        background-color: $desktopPaneBackground;
+        background-image: theme_image($theme-name, "dashboard-designer/desktop.png");
+    }
+
+    .portalpane {
+        background-color: $portalPaneBackground;
+        background-image: theme_image($theme-name, "dashboard-designer/portal.png");
+    }
+
+    .fitpane {
+        background-color: $fitPaneBackground;
+        background-image: theme_image($theme-name, "dashboard-designer/fit.png");
+    }
+
+    .vbox > .one > .editable, .vbox > .two > .editable {
+        left: 1.25em;
+        bottom: 40%;
+    }
+
+    .vbox > .one, .vbox > .two {
+        > .editable, > .editable-inline {
+            left: 1.25em;
+            bottom: 40%;
+        }
+    } 
+}
+
+.box {
+    position: absolute;
+}
+
+/*==========  IE 7  ==========*/
+.lt-ie8 {
+    #dashboard-designer {
+
+        .tabbedpane {
+            background-color: $tabbedPaneIE78Background;
+        }
+
+        .accordionpane {
+            background-color: $accordionPaneIE78Background;
+        }
+
+        .desktoppane {
+            background-color: $desktopPaneIE78Background;
+        }
+
+        .portalpane {
+            background-color: $portalPaneIE78Background;
+        }
+
+        .fitpane {
+            background-color: $fitPaneIE78Background;
+        }
+    }
+
+    .working-area {
+        .pane {
+            &.highlight, &.focus {
+                background-color: $dropBackground !important;
+            }
+        }
+    }
+}

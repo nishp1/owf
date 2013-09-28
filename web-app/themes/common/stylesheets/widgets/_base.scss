@@ -1,0 +1,39 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+$widgetBorderWidth: 1px;
+$widgetResizableWidth: 6px; //Width of the resizable handles surrounding widget inside border
+$resizableHandleZIndex: 1;
+
+$widgetInactiveBackground: #9da4a9 !default;
+$widgetInactiveColor: #777 !default;
+$widgetInactiveColorHover: $grayDark !default;
+$widgetInactiveBorder: $widgetBorderWidth solid #ccc !default;
+
+$widgetActiveBackground: #2a2a2a !default;
+$widgetActiveColor: white !default;
+$widgetActiveColorHover: $grayDark !default;
+$widgetActiveBorder: $widgetBorderWidth solid #ccc !default;
+
+
+.widget {
+    
+}
+
+.widgetframe {
+    background-color: white;
+    position: absolute;
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard APIs Widget</title>
+
+        <link rel="stylesheet" href="../../libs/css/bootstrap.css" />
+        <style type="text/css">
+            .hide {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="get-all-dashboards-btn" class="btn">Get All Dashboards</button>
+
+        <table id="dashboards-table" class="table">
+            <thead>
+                <th>Name</th>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Position</th>
+                <th>Created</th>
+                <th>Last Modified</th>
+                <th>Created By</th>
+                <th>Last Modified By</th>
+                <th>Layout Config</th>
+                <th>Floating Widgets</th>
+                <th>Background Widgets</th>
+                <th>Is Locked</th>
+                <th>Last Accessed</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <label>
+            Guid of Dashboard to lookup using getDashboard:<br/>
+            <input type="text" id="dashboard-guid" />
+        </label>
+        <button id="get-dashboard-btn" class="btn">Get Specified Dashboard</button>
+        <dl>
+            <dt>Name</dt><dd id="name"></dd>
+            <dt>Id</dt><dd id="dashboardId"></dd>
+            <dt>Description</dt><dd id="description"></dd>
+            <dt>Position</dt><dd id="position"></dd>
+            <dt>Created</dt><dd id="created"></dd>
+            <dt>Last Modified</dt><dd id="lastModified"></dd>
+            <dt>Created By</dt><dd id="createdBy"></dd>
+            <dt>Last Modified By</dt><dd id="lastModifiedBy"></dd>
+            <dt>Layout Config</dt><dd id="layoutConfig"></dd>
+            <dt>Floating Widgets</dt><dd id="floatingWidgets"></dd>
+            <dt>Background Widgets</dt><dd id="backgroundWidgets"></dd>
+            <dt>Is Locked</dt><dd id="isLocked"></dd>
+            <dt>Last Accessed</dt><dd id="lastAccessed"></dd>
+        </dl>
+
+        <div id="error-block" class="alert alert-block hide">
+            <p class="response-code"></p>
+            <p class="response-text"></p>
+        </div>
+
+        <script type="text/javascript" src="../../js-min/owf-widget-debug.js"></script>
+        <script type="text/javascript" src="../../libs/js/jquery.js"></script>
+
+        <script type="text/javascript">
+            var errorBlock = $('#error-block');
+
+            function updateAllDashboards(dashboards) {
+                var rows = $.map(dashboards, function(d) {
+                    return $('<tr>')
+                        .append($('<td class="name">').text(d.name))
+                        .append($('<td class="id">').text(d.id))
+                        .append($('<td class="description">').text(d.description))
+                        .append($('<td class="position">').text(d.position))
+                        .append($('<td class="created">').text(d.created))
+                        .append($('<td class="lastModified">').text(d.lastModified))
+                        .append($('<td class="createdBy">').text(d.createdBy))
+                        .append($('<td class="lastModifiedBy">').text(d.lastModifiedBy))
+                        .append($('<td class="layoutConfig">').text(JSON.stringify(d.layoutConfig)))
+                        .append($('<td class="floatingWidgets">').text(JSON.stringify(d.floatingWidgets)))
+                        .append($('<td class="backgroundWidgets">').text(JSON.stringify(d.backgroundWidgets)))
+                        .append($('<td class="isLocked">').text(d.isLocked))
+                        .append($('<td class="lastAccessed">').text(d.lastAccessed));
+                });
+
+                //clear the tbody and repopulate it with the rows
+                $('#dashboards-table > tbody').html('').append(rows);               
+            }
+
+            function updateDashboard(dash) {
+                $('#name').text(dash.name);
+                $('#dashboardId').text(dash.id);
+                $('#description').text(dash.description);
+                $('#position').text(dash.position);
+                $('#created').text(dash.created);
+                $('#lastModified').text(dash.lastModified);
+                $('#createdBy').text(dash.createdBy);
+                $('#lastModifiedBy').text(dash.lastModifiedBy);
+                $('#layoutConfig').text(JSON.stringify(dash.layoutConfig));
+                $('#floatingWidgets').text(JSON.stringify(dash.floatingWidgets));
+                $('#backgroundWidgets').text(JSON.stringify(dash.backgroundWidgets));
+                $('#isLocked').text(dash.isLocked);
+                $('#lastAccessed').text(dash.lastAccessed);
+            }
+
+            function handleError(error) {
+                errorBlock.children('.response-code').text(error.status || '');
+                errorBlock.children('.response-text').text(error.responseText || '');
+                errorBlock.removeClass('hide');
+            }
+            
+
+            $('#get-all-dashboards-btn').click(function() {
+                OWF.Dashboards.getAllDashboards()
+                    .done(updateAllDashboards)
+                    .fail(handleError);
+            });
+
+            $('#get-dashboard-btn').click(function() {
+                OWF.Dashboards.getDashboard({
+                    id: $('#dashboard-guid').val()
+                }).done(updateDashboard).fail(handleError);
+            });
+        </script>
+    </body>
+</html>

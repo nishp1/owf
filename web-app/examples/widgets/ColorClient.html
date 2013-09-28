@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Color Client</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="../../libs/css/select2.css">
+    <link rel="stylesheet" href="../../libs/css/bootstrap.css">
+
+    <script type="text/javascript" src="../../js-min/owf-widget-debug.js"></script>
+    <script type="text/javascript" src="../../libs/js/jquery.js"></script>
+
+    <script type="text/javascript">
+    
+        OWF.relayFile = 'js/eventing/rpc_relay.uncompressed.html';
+
+        OWF.ready(function () {
+
+            function getColorList() {
+                OWF.getOpenedWidgets(function(widgetList) {
+                    var widgetId;
+                    if (widgetList != null) {
+                        for (var i = 0; i < widgetList.length; i++) {
+                            if (widgetList[i].id != null && widgetList[i].name.match(/^.*Color Server.*$/) != null) {
+                                widgetId = widgetList[i].id;
+                                break;
+                            }
+                        }
+                        if (widgetId != null) {
+                            $('#errors').css('display', 'none');
+                            //Get the Color Server widget proxy
+                            OWF.RPC.getWidgetProxy(widgetId, function(widget) {
+                                //Call getColors() defined in ColorServer.js
+                                widget.getColors(function(colors) {
+                                    //Populate the select with the returned colors
+                                    var selColors = $('#colors');
+                                    if (selColors) {
+                                        selColors.empty();
+                                        for(var i = 0; i < colors.length; i++) {
+                                            selColors.append($('<option></option>')
+                                                .attr("value", i).text(colors[i]))
+                                        }
+                                    }
+                                });
+                            });
+                        } else {
+                            $('#errors').css('display', 'block');
+                        }
+                    }
+                });
+            }
+
+            function sendColor() {
+                OWF.getOpenedWidgets(function(widgetList) {
+                    var widgetId;
+                    if (widgetList != null) {
+                        for (var i = 0; i < widgetList.length; i++) {
+                            if (widgetList[i].id != null && widgetList[i].name.match(/^.*Color Server.*$/) != null) {
+                                widgetId = widgetList[i].id;
+                                break;
+                            }
+                        }
+                        if (widgetId != null) {
+                            $('#errors').css('display', 'none');
+                            //Get the Color Server widget proxy
+                            OWF.RPC.getWidgetProxy(widgetId, function(widget) {
+                                //Send a direct message to Color Server with the color to change to
+                                widget.sendMessage($('#colors option:selected').text());
+                            });
+                        } else {
+                            $('#errors').css('display', 'block');
+                        }
+                    }
+                });
+            }
+
+            $('#listColorsButton').mousedown(getColorList);
+            $('#sendColor').mousedown(sendColor);
+        });
+    </script>
+
+
+</head>
+<body>
+    <h1>Color Client</h1>
+
+    <button id="listColorsButton" type="button">List Colors</button>
+    <select id="colors"></select>
+
+    <button id="sendColor" type="button">Send Color in Direct Message</button>
+
+    <div id="errors" style="color:red;font-weight:bold;display:none;">Missing Color Server!</div>
+</body>
+</html>

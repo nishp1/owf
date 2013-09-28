@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Ozone Widget Framework</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    
+    <link rel="shortcut icon" href="themes/common/images/favicon.ico" />
+
+    <!--[if IE 7]>
+        <link rel="stylesheet" href="libs/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <link rel="stylesheet" href="libs/css/jquery-splitter.css">
+    <link rel="stylesheet" href="libs/css/bootstrap-editable.css">
+    <link rel="stylesheet" href="libs/css/bootstrap-notify.css">
+    <link rel="stylesheet" href="libs/css/styles/alert-notification-animations.css">
+    <link rel="stylesheet" href="libs/development-bundle/themes/base/minified/jquery.ui.core.min.css">
+    <link rel="stylesheet" href="libs/development-bundle/themes/base/minified/jquery.ui.resizable.min.css">
+    <link rel="stylesheet" href="libs/development-bundle/themes/base/minified/jquery.ui.selectable.min.css">
+    <link rel="stylesheet" href="libs/development-bundle/themes/base/minified/jquery.ui.theme.min.css">
+    <link rel="stylesheet" href="libs/css/select2.css">
+    <link rel="stylesheet" href="themes/a_default.theme/css/a_default.css">
+
+    <!-- Must be included in head. See http://modernizr.com/docs/#installing -->
+    <script src="libs/js/modernizr.js"></script>
+</head>
+<body>
+    <noscript>This application requires javascript to be enabled.</noscript>
+
+    <script type="text/javascript">
+        ;(function() {
+            if (!window.console) {
+                window.console = {};
+            }
+            // all console methods
+            var m = [
+                "log", "info", "warn", "error", "debug", "trace", "dir", "group",
+                "groupCollapsed", "groupEnd", "time", "timeEnd", "profile", "profileEnd",
+                "dirxml", "assert", "count", "markTimeline", "timeStamp", "clear"
+            ];
+            // define undefined methods as noops to prevent errors
+            for (var i = 0; i < m.length; i++) {
+                if (!window.console[m[i]]) {
+                    window.console[m[i]] = function() {};
+                }
+            }
+        })();
+    </script>
+    <div id="mask" class="hide"></div>
+    <div id="main" style="height:100%; width:100%">
+
+        <div id="toolbar" class="navbar navbar-static-top"></div>
+
+        <div id="dashboard-container"></div>
+
+    </div>
+
+    <script src="libs/js/json2.js"></script>
+    <script src="js/production-debug.js"></script>
+    <script src="js/serverConfig.js"></script>
+    <script>
+        //require main to start the app
+        require(['main']);
+    </script>
+</body>
+</html>

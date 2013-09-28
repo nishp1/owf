@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Channel Shouter</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="../../libs/development-bundle/themes/base/minified/jquery-ui.min.css">
+    <link rel="stylesheet" href="../../libs/css/bootstrap.css">
+    <link rel=stylesheet href="../../css/dragAndDrop.css" />
+    <style type="text/css">
+        body {
+            padding:5px;
+        }
+
+            /* Custom container */
+        .container {
+            height: 195px;
+            width: 245px;
+        }
+
+        .dragZone {
+            height: 18px;
+            width: 18px;
+
+            vertical-align: baseline;
+        }
+
+    </style>
+
+    <!--<link href="../../../../css/dragAndDrop.css" rel="stylesheet" type="text/css">-->
+    <script type="text/javascript" src="../../js-min/owf-widget-debug.js"></script>
+    <script type="text/javascript" src="../../libs/js/jquery.js"></script>
+
+    <script type="text/javascript">
+
+        OWF.relayFile = 'js/eventing/rpc_relay.uncompressed.html';
+
+        OWF.ready(function () {
+            $('#sendButton').mousedown(function () {
+                var channel = $('#channel').val();
+                var message = $('#message').val();
+
+                if (channel != null && message != null) {
+                    OWF.Eventing.publish(channel, message);
+                }
+            });
+
+            $('.dragZone').mousedown(function(e) {
+                var channel = $('#channel').val();
+                if (!channel) {
+                    return;
+                }
+
+                //important: this is required or the iframe will retain focus
+                e.preventDefault();
+
+                OWF.DragAndDrop.doStartDrag({
+                    dragDropLabel: channel,
+                    dragDropData: channel
+                });
+            });
+        });
+    </script>
+
+
+</head>
+<body>
+<div class="container">
+    <fieldset>
+        <label>Channel:</label>
+            <input id="channel" type="text" placeholder="Channel Name"/>
+            <img class="dragZone" src="../../images/widget-icons/ChannelShouter.png" />
+        <label>Message:</label>
+        <textarea id="message" rows="3"></textarea><br/>
+        <button id="sendButton" class="btn">Send</button>
+    </fieldset>
+</div>
+</body>
+</html>

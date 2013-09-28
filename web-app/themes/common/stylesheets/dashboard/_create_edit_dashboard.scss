@@ -1,0 +1,56 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#create-dashboard-window, #edit-dashboard-window {
+    input[type="text"],
+    textarea {
+         // modal width - modal body padding - controls margin left - input padding - input border
+        width: 560px - (15px * 2) - 180px - (6px * 2) - (2px);
+    }
+
+    input[type="file"] {
+        width: 100%;
+    }
+}
+#create-dashboard-window, #edit-dashboard-window, .select2-drop {
+    z-index: 100000000;
+}
+
+#create-dashboard-window {
+
+    .create-from-existing {
+        select {
+            width: 100%;
+        }
+    }
+    
+    .create-from-existing, .import {
+        & > label {
+            padding-left: 0;
+
+            & > input {
+                margin-left: 0;
+            }
+        }
+    }
+
+    .import.error {
+        input[type="file"], .checkbox {
+            @include box-shadow(none);
+       }
+   }
+
+}

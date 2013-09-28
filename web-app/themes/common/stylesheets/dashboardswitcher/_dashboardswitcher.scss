@@ -1,0 +1,226 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+$dashboard-switcher-background-color: $baseColor !default;
+$dashboard-switcher-opacity: 0.90 !default;
+
+$dashboard-switcher-dashboard-background-color: $dashboard-switcher-background-color !default;
+$dashboard-switcher-dashboard-over-background-color: darken($dashboard-switcher-dashboard-background-color, 15) !default;
+$dashboard-switcher-dashboard-selected-background-color: lighten($dashboard-switcher-dashboard-background-color, 10) !default;
+
+$dashboard-switcher-dashboard-border-color: $dashboard-switcher-background-color !default;
+$dashboard-switcher-dashboard-over-border-color: $dashboard-switcher-dashboard-over-background-color !default;
+$dashboard-switcher-dashboard-selected-border-color: $dashboard-switcher-dashboard-selected-background-color !default;
+
+$dashboard-switcher-layout-default-icon: theme-image($theme-name, 'dashboardswitcher/DefaultDashboard.png') !default;
+$dashboard-switcher-layout-default-icon-over: theme-image($theme-name, 'dashboardswitcher/DefaultDashboard_Color.png') !default;
+
+$dashboard-switcher-layout-stack-default-icon: theme-image($theme-name, 'dashboardswitcher/StacksIcon.png') !default;
+$dashboard-switcher-layout-stack-default-icon-over: theme-image($theme-name, 'dashboardswitcher/StacksIcon_Color.png') !default;
+
+$share-color: #6ba6dd !default;
+$restore-color: #dd8f08 !default;
+$edit-color: #99d460 !default;
+$delete-color: #b3292d !default;
+
+$thumb-width: 73px;
+$thumb-height: 70px;
+$name-height: $baseFontSize * 3.25;
+$item-width: $baseFontSize * 8.2;
+$item-height: $thumb-height + $baseFontSize * 3.25;
+
+
+#dashboard-switcher {
+
+    background: $baseColor;
+    overflow: hidden;
+
+    .modal-body {
+        padding: 0px;
+    }
+    
+    .tilesview {
+        overflow: hidden;
+    }
+
+    .manage-btn i {
+        padding-right: 0.25em;
+    }
+
+    .manage-btn.active {
+        color: $grayDark;
+        background-color: $owf-focus-color;
+    }
+}
+
+.tilesview > .stack, .tilesview > .dashboard {
+    float: left;
+    margin: 10px;
+    padding: 15px 15px 0px 15px;
+    position: relative;
+    text-align:center;
+    overflow: hidden;
+    min-width: $item-width;
+    max-width: $item-width;
+
+    width: $item-width;
+    height: $item-height;
+
+    outline: none;
+    background-image: none !important;
+
+    @include border-radius($baseBorderRadius);
+    
+    .thumb-wrap {
+        text-align: center;
+        white-space:nowrap;
+        margin-left:auto;
+        margin-right:auto;
+        width: $thumb-width;
+        cursor: move;
+
+        .thumb {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            width: $thumb-width;
+            height: $thumb-height;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-image: $dashboard-switcher-layout-default-icon;
+        }
+    }
+
+    > span {
+        display: block;
+        height: $name-height;
+        width: $item-width;
+        margin-top: 2px;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+    }
+    
+    &:hover {
+        background-color: $tableBackgroundHover !important;
+    }
+
+    &.selected {
+        background-color: $tableBackgroundHover !important;
+        .dashboard-name {
+            font-weight: bold;
+        }
+        .thumb {
+            background-image: $dashboard-switcher-layout-default-icon-over !important;
+        }
+    }
+
+    .btn-group {
+        display: none;
+        position: absolute;
+        top: $item-height/2;
+        left: 0px;
+        width: 100%;
+
+        .btn {
+            @extend .no-border-radius;
+            border: none;
+        }
+
+        .btn:hover {
+            .icon-share {
+                color: $share-color;
+            }
+            .icon-refresh {
+                color: $restore-color;
+            }
+            .icon-edit {
+                color: $edit-color;
+            }
+            .icon-remove {
+                color: $delete-color;
+            }
+        }
+    }
+
+    // fixes 1px gap on left and right side of btn-group
+    .btn-group > .btn + .btn {
+        margin-left: 0px;
+    }
+}
+
+.tilesview > .stack {
+    .thumb {
+        background-image: $dashboard-switcher-layout-stack-default-icon !important;
+    }
+    .btn {
+        width: 50%;
+    }
+    &.selected {
+        .thumb {
+            background-image: $dashboard-switcher-layout-stack-default-icon-over !important;
+        }
+    }
+}
+
+.stack-dashboards-view {
+    clear: both;
+    position:relative;
+    top: -30px;
+    
+    .tilesview {
+        background: darken($baseColor, 5%);
+    }
+}
+
+.stack-dashboards-anchor-tip {
+    margin: 0px;
+    padding: 0px;
+    
+    border-width: 20px;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: darken($baseColor, 5%);
+    
+    position: relative;
+    width: 0px;
+    height: 0px;
+    overflow: hidden;
+    border-style: solid;
+}
+
+.dashboard-tooltip-content {
+    text-align: left;
+    
+    .dashboard-tooltip-content {
+        padding: 1.25em;
+    }
+
+    h3 {
+        font-size: 1.5em;
+        margin: 0 0 1.25em 0;
+    }
+
+    p {
+        font-size: $owf-font-size;
+        line-height: 1.5em;
+    }
+
+    .tip-description {
+        line-height: (14/12);
+    }
+}

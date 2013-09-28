@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User Information Widget</title>
+
+        <link rel="stylesheet" href="../../libs/css/bootstrap.css" />
+        <style type="text/css">
+            .hide {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <label>
+            <input type="checkbox" id="legacy-api-checkbox" />
+            Use Legacy API
+        </label>
+        <button id="get-current-user-btn" class="btn">Get Current User</button>
+
+        <dl>
+            <dt>Username</dt><dd id="username"></dd>
+            <dt>Full Name</dt><dd id="fullName"></dd>
+            <dt>Id</dt><dd id="userId"></dd>
+            <dt>Last Login</dt><dd id="lastLogin"></dd>
+            <dt>Previous Login</dt><dd id="prevLogin"></dd>
+        </dl>
+
+        <div id="error-block" class="alert alert-block hide">
+            <p class="response-code"></p>
+            <p class="response-text"></p>
+        </div>
+
+        <script type="text/javascript" src="../../js-min/owf-widget-debug.js"></script>
+        <script type="text/javascript" src="../../libs/js/jquery.js"></script>
+
+        <script type="text/javascript">
+            var errorBlock = $('#error-block');
+
+            function update(user) {
+                $('#username').text(user.username);
+                $('#fullName').text(user.fullName);
+                $('#userId').text(user.id);
+                $('#lastLogin').text(user.lastLogin);
+                $('#prevLogin').text(user.prevLogin);
+            }
+
+            function handleError(error) {
+                errorBlock.children('.response-code').text(error.status || '');
+                errorBlock.children('.response-text').text(error.responseText || '');
+                errorBlock.removeClass('hide');
+            }
+
+            function call() {
+                OWF.getCurrentUser()
+                    .done(update)
+                    .fail(handleError);
+            }
+
+            function callLegacy() {
+                OWF.Preferences.getCurrentUser({
+                    onSuccess: function(user) {
+                        update({
+                            username: user.currentUserName,
+                            fullName: user.currentUser,
+                            prevLogin: user.currentUserPrevLogin,
+                            id: user.currentId,
+                            lastLogin: null
+                        });
+                    },
+                    onFailure: function(response) {
+                        handleError({reponseText: reponse});
+                    }
+                });
+            }
+
+            OWF.relayFile = 'js/eventing/rpc_relay.uncompressed.html';
+
+            $('#get-current-user-btn').click(function() {
+                if ($('#legacy-api-checkbox').is(':checked')) {
+                    callLegacy();
+                }
+                else {
+                    call();
+                }
+                    
+            });
+        </script>
+    </body>
+</html>

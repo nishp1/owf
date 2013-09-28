@@ -1,0 +1,92 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@charset "UTF-8";
+
+ //pull in base functions and mixins provided by the compass framework
+@import "compass";
+
+// This variable is required.  It must be equal to the name property in the theme.json file.
+$theme-name: "YOUR_THEME_NAME";
+
+// ===============================
+//  Theme Variables 
+// ===============================
+
+$baseColor: #fff;
+$focusColor: red;
+
+$baseBorderRadius:      0;
+$borderRadiusLarge:     0;
+$borderRadiusSmall:     0;
+
+// Put your theme customizations here. If you have many customizations,
+// you may want to put them in a separate file which you import here. 
+// The import statements in this file reference stylesheets from Twitter 
+// Bootstrap and from the themes/common folder.
+
+
+// Note that you MUST define a background here, as the default is to have none.
+// For examples of how to do this, look in the themes that already exist
+
+.no-border-radius {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+}
+
+
+// These styles will be applied to the body of both OWF itself and the admin widgets
+html, body {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
+    -webkit-backface-visibility: hidden;
+    
+    background-image: url('../../common/images/stripes.png'), url('../../common/images/owf_logo.png'), -webkit-radial-gradient(white, #E6E7E8);
+    background-image: url("../../common/images/stripes.png"), url("../../common/images/owf_logo.png"), -moz-radial-gradient(white, #E6E7E8);
+    height: 100%;
+    outline: 0 none;
+    cursor: default;
+    background-attachment: fixed;
+    background-position: center center, center center;
+    background-repeat: repeat, no-repeat, no-repeat;
+}
+
+// These styles will only be applied to the OWf container, not the admin widgets
+#owf-body {
+}
+
+
+// mask used to shim entire document body
+#mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1000000000;
+}
+
+
+// Import Compass Twitter Bootstrap and variable overrides.
+@import "bootstrap_overrides";
+@import "compass_twitter_bootstrap_awesome";
+@import "jquery-ui.css";
+@import "dashboard/main";
+@import "dashboard/all";

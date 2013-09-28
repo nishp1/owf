@@ -1,0 +1,329 @@
+/*
+ * Copyright 2013 Next Century Corporation 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+@mixin owf-toolbar-menu-divider-bg {
+  background-color: #eeeeee;
+  background: -moz-linear-gradient(right, rgba(238, 238, 238, 0), rgba(238, 238, 238, 0.4), rgba(238, 238, 238, 0)); 
+  background: -webkit-linear-gradient(right, rgba(238, 238, 238, 0), rgba(238, 238, 238, 0.4), rgba(238, 238, 238, 0)); 
+  background: -o-linear-gradient(right, rgba(238, 238, 238, 0), rgba(238, 238, 238, 0.4), rgba(238, 238, 238, 0));
+  background: linear-gradient(right, rgba(238, 238, 238, 0), rgba(238, 238, 238, 0.4), rgba(238, 238, 238, 0));
+}
+
+#toolbar {
+    @include ctb-user-select(none);
+    @include ctb-gradient-vertical(#55656d, #2a2a2a);
+    width: 100%;
+    height: $bannerHeight;
+    *zoom: 1;
+    border-width: 1px 0 1px 0;
+    padding: 0px;
+    border-color: $black;
+
+    .navbar-inner {
+        min-height: $bannerHeight;
+        max-height: $bannerHeight;
+        text-align: center;
+        filter: none;
+        height: $bannerHeight;
+        background: transparent theme-image($theme-name, 'banner/logo.png') no-repeat center;
+        padding: 0px;
+        border: 0px;
+    }
+}
+
+#toolbar-item-list {
+    position: absolute;
+    left: 0px;
+    z-index: 1000000; // needed for ie7
+}
+
+#toolbar-item-list .tooltip {
+
+    padding: 0px;
+    margin: 0px;
+    z-index: 1000000;
+    opacity: 1;
+    
+    .tooltip-arrow {
+        display: none;
+        border: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .tooltip-inner {
+        @include ctb-border-radius(3px);
+        width: 450px;
+        max-width: 450px;
+        font-family: $sansFontFamily;
+        font-size: 11px;
+        line-height: 1.2;
+        text-align: left;
+        border: 1px solid $black;
+        background-color: #2a2a2a;
+        padding: 5px;
+    }
+}
+
+.toolbar-button {
+    height: $bannerHeight;
+    width: 40px;
+    padding: 0px;
+    margin: 0px;
+    vertical-align: middle;
+    display: inline-block;
+    border: 0px;
+    background-color: transparent;
+}
+
+.navbar .nav > li > a.focus {
+    background-color: $black;
+    @include ctb-border-radius(5px);
+}
+
+.navbar .nav > li > a.focus-ie7 {
+    background-color: $black;
+}
+
+.toolbar-button:hover {
+    background-color: $black;
+    cursor: pointer;
+    @include ctb-border-radius(5px);
+}
+
+.toolbar-button-icon {
+    height: $bannerHeight;
+    width: 40px;
+    padding: 0px !important;
+    margin: 0px; 
+    display: inline-block !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+.toolbar-separator {
+    height: $bannerHeight;
+    vertical-align: middle;
+    display: inline-block;
+    width: 1px;
+    background-color: $white;
+    border: 0px solid;
+    border-left: 1px solid #141a1f;
+    border-right: 1px solid #141a1f;
+    opacity: .25;
+}
+
+.launch-menu-button-icon {
+  background-image: theme-image($theme-name, 'banner/launch_menu.png');
+}
+
+.switcher-button-icon {
+  background-image: theme-image($theme-name, 'banner/dashboards.png');
+}
+
+.settings-button-icon {
+  background-image: theme-image($theme-name, 'banner/settings.png');
+}
+
+.admin-button-icon {
+  background-image: theme-image($theme-name, 'banner/admin.png');
+}
+
+.help-button-icon {
+  background-image: theme-image($theme-name, 'banner/help.png');
+}
+
+.marketplace-button-icon {
+  background-image: theme-image($theme-name, 'banner/marketplace.png');
+}
+
+.metrics-button-icon {
+  background-image: theme-image($theme-name, 'banner/32x32_metrics.png');
+}
+
+#toolbar-menu.dropdown {
+    cursor: pointer;
+}
+
+#toolbar-menu {
+    background-image: none;
+    filter: none;
+    background-color: rgb(42, 42, 42);        
+    background-color: rgba(42, 42, 42, 0.5) ;
+    border-left: 1px solid $black;
+    margin: 0px;
+    top: 0px !important;
+    right: 0px;
+    position: absolute;
+    border: 0px;
+    border-radius: 0px;
+    width: 150px;
+    font-size: 12px;
+    z-index: 1000000;   // ie7 specific
+
+    .toolbar-menu-button {
+        padding: 0px;
+        height: $bannerHeight;
+        line-height: $bannerHeight;
+        font-family: $sansFontFamily;
+        color: $white;
+        text-shadow: none;
+        background-repeat: no-repeat;
+        text-decoration: none;
+        display: block;
+    }
+
+    .toolbar-menu-button-text {
+        padding-right: 10px;
+        @include ctb-user-select(none);
+    }
+
+    .toolbar-menu-button-icon {
+        background: theme-image($theme-name, 'banner/user_menu.png') no-repeat center center;
+        padding: 5px 20px 5px 0px;
+        @include ctb-user-select(none);
+    }
+
+    &:hover {
+
+        cursor: pointer;
+
+        .toolbar-menu-button-text {
+            color: #b4d681;
+        }
+
+        .toolbar-menu-button-icon {
+            background-image: theme-image($theme-name, 'banner/user_menu_over.png');
+        }
+    }
+
+    &.mouse-down {
+
+        .toolbar-menu-button-icon {
+            background-image: theme-image($theme-name, 'banner/user_menu.png') !important;
+        }
+    }
+
+    #toolbar-menu-list, #toolbar-menu-list:before, #toolbar-menu-list:after {
+        content: none;
+        padding: 0px;
+        margin: 0px;
+        border: 0px;
+        z-index: 0px;
+    }
+
+    .dropdown-menu 
+    {
+        background-color: #222222;
+        width: 16em;
+        top: 32px;
+        right: 0;
+        left: auto;
+        display: inline-block;
+        @include ctb-border-bottom-left-radius(10px);
+        @include ctb-border-bottom-right-radius(10px);
+
+        &.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            @include ctb-transition(visibility 0s linear .1s);
+            @include ctb-transition(opacity 0.1s linear 0.0s);
+        }
+
+        &.fade-in {
+            visibility: visible;
+            opacity: 1;
+            @include ctb-transition(visibility 0s linear .8s);
+            @include ctb-transition(opacity 0.1s linear .8s);
+        }
+
+        &.fade-in-now {
+            visibility: visible;
+            opacity: 1;
+            @include ctb-transition(visibility 0s linear 0s);
+            @include ctb-transition(opacity 0.1s linear 0s);
+        }
+
+        li {
+            padding: 0px;
+            line-height: 1.5;
+            background-color: #222222;
+            color: #eeeeee;
+            text-align: left;
+
+            a {
+                padding: 10px;
+            padding-left: 15px;
+                line-height: 1.5;
+                background-color: #222222;
+                color: #eeeeee;
+            }
+
+            &:hover, a.focus {
+                background-color: $black;
+                cursor: pointer;
+                outline: none;
+
+                .toolbar-menu-item-previous-sign-in {
+                    background-color: #222222;
+                    cursor: default;
+                }
+            }
+
+            &.toolbar-menu-item-previous-sign-in {
+                
+                a {
+                    color: #d3cca7;
+                    font-size: .8em;
+                    font-weight: bold;
+                }
+
+                &:hover {
+                    background-color: #222222;
+                    cursor: default;
+                }
+           }
+
+           &.divider {
+                margin: 3px 10px 3px 10px;
+                padding: 0px;
+                border-style: none;
+                height: 1px;
+                @include owf-toolbar-menu-divider-bg;
+           }
+
+           &.toolbar-menu-item-sign-out {
+                @include ctb-border-bottom-left-radius(10px);
+                @include ctb-border-bottom-right-radius(10px);
+
+                &:hover, a.focus {
+                    background-color: #9d0e11;
+                    outline: none;
+                    @include ctb-border-bottom-left-radius(10px);
+                    @include ctb-border-bottom-right-radius(10px);
+                }
+            }
+
+          a, a:hover {
+            background-color: transparent;
+            background-image: none;
+            filter: none;
+          }
+        }
+    }
+
+    
+}

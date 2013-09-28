@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Channel Listener</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="../../libs/development-bundle/themes/base/minified/jquery-ui.min.css">
+    <link rel="stylesheet" href="../../libs/css/bootstrap.css">
+    <link rel=stylesheet href="../../css/dragAndDrop.css" />
+    <style type="text/css">
+        body {
+            padding:5px;
+        }
+
+            /* Custom container */
+        .container {
+            max-width: 500px;
+        }
+
+        .btn {
+            vertical-align: top;
+        }
+
+        .dropZone {
+            background-color: #7fce42;
+        }
+    </style>
+    <!--<link href="../../../../css/dragAndDrop.css" rel="stylesheet" type="text/css">-->
+    <script type="text/javascript" src="../../js-min/owf-widget-debug.js"></script>
+    <script type="text/javascript" src="../../libs/js/jquery.js"></script>
+
+
+</head>
+<body>
+<div class="container">
+    <fieldset>
+        <label>Channel:</label>
+        <input id="channel" type="text" placeholder="Channel Name"/>
+        <button id="subscribeBtn" class="btn">Subscribe</button>
+        <button id="clearAllBtn" class="btn">Clear</button>
+        <label>Channels:</label>
+        <table id="channelTable" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Channel</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <label>Messages:</label>
+        <table id="messageTable" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Channel</th>
+                <th>Message</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </fieldset>
+</div>
+<script type="text/javascript">
+    var channelInput = $('#channel'),
+        channelTableBody = $('#channelTable tbody'),
+        messageTableBody = $('#messageTable tbody'),
+        channels = {};
+
+    function initDragAndDrop() {
+        var dropZone = $('#channelTable'),
+            dragging;
+
+        OWF.DragAndDrop.addDropZoneHandler({
+            dropZone: dropZone[0],
+            handler: function(ddData) {
+                subscribeToChannel(ddData.dragDropData);
+            }
+        });
+
+        OWF.DragAndDrop.addCallback('dragStart', function() {
+            dropZone.addClass('dropZone');
+            dragging = true;
+        });
+        OWF.DragAndDrop.addCallback('dragStop', function() {
+            dropZone.removeClass('dropZone');
+            dragging = false;
+        });
+
+        dropZone
+            .mouseover(function() {
+                OWF.DragAndDrop.setDropEnabled(true);
+            })
+            .mouseout(function() {
+                OWF.DragAndDrop.setDropEnabled(false);
+            });
+    }
+
+    function subscribeToChannel(channel) {
+        if (channel != null && !channels[channel]) {
+            channelTableBody.append('<tr>' +
+                    '<td>' + channel + '</td>' +
+                    '</tr>');
+            OWF.Eventing.subscribe(channel, function (sender, msg, channel) {
+                messageTableBody.append('<tr>' +
+                        '<td>' + channel + '</td>' +
+                        '<td>' + OWF.Util.HTMLEncode(msg) + '</td>' +
+                        '</tr>');
+            });
+            channels[channel] = true;
+        }
+    }
+
+    OWF.relayFile = 'js/eventing/rpc_relay.uncompressed.html';
+
+    OWF.ready(function () {
+
+        $('#subscribeBtn').mousedown(function () {
+            subscribeToChannel(channelInput.val());
+        });
+
+        $('#clearAllBtn').mousedown(function () {
+            for (var name in channels) {
+                if (channels[name]) {
+                    OWF.Eventing.unsubscribe(name);
+                    channels[name] = false;
+                }
+            }
+            channelInput.val('');
+            channelTableBody.empty();
+        });
+
+        initDragAndDrop();
+    });
+</script>
+</body>
+</html>
