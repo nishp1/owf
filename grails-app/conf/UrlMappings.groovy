@@ -347,7 +347,7 @@ class UrlMappings {
             action="whoami"
         }
 
-        "/js/config/config.js" {
+        "/js/config.js" {
             controller="config"
             action="config"
         }

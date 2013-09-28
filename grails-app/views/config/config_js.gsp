@@ -2,47 +2,62 @@
 <%@ page import="grails.util.Environment" %>
 <%@ page import="ozone.security.SecurityUtils" %>
 
-var Ozone = Ozone || {};
-//externalize any config properties here as javascript properties
-//this should be only place where these config properties are exposed to javascript
+define('config', ['lodash'], function (_) {
+    'use strict';
 
-Ozone.config = ${conf};
+    var Ozone = Ozone || {};
+    //externalize any config properties here as javascript properties
+    //this should be only place where these config properties are exposed to javascript
 
-//add in contextPath
-Ozone.config.webContextPath = window.location.pathname;
+    Ozone.config = ${conf};
 
-// fixes 'Error: Illegal Operator !=' error in IE
-Ozone.config.webContextPath = Ozone.config.webContextPath.replace(/\;jsessionid=.*/g,'');
+    //add in contextPath
+    Ozone.config.webContextPath = window.location.pathname;
 
-if(Ozone.config.webContextPath.charAt(Ozone.config.webContextPath.length - 1) === '/') {
-    Ozone.config.webContextPath = Ozone.config.webContextPath.substr(0,Ozone.config.webContextPath.length - 1);
-}
+    // fixes 'Error: Illegal Operator !=' error in IE
+    Ozone.config.webContextPath = Ozone.config.webContextPath.replace(/\;jsessionid=.*/g,'');
 
-Ozone.config.carousel = {
-    restrictedTagGroupsRegex: new RegExp('^(.*,)?\s*'+Ozone.config.pendingApprovalTagGroupName+'\s*(,.*)?$','im'),
-    pendingApprovalTagGroupName:Ozone.config.pendingApprovalTagGroupName,
-    approvedTagGroupName: Ozone.config.approvedTagGroupName
-};
+    if(Ozone.config.webContextPath.charAt(Ozone.config.webContextPath.length - 1) === '/') {
+        Ozone.config.webContextPath = Ozone.config.webContextPath.substr(0,Ozone.config.webContextPath.length - 1);
+    }
 
-Ozone.config.user = ${user};
+    Ozone.config.carousel = {
+        restrictedTagGroupsRegex: new RegExp('^(.*,)?\s*'+Ozone.config.pendingApprovalTagGroupName+'\s*(,.*)?$','im'),
+        pendingApprovalTagGroupName:Ozone.config.pendingApprovalTagGroupName,
+        approvedTagGroupName: Ozone.config.approvedTagGroupName
+    };
 
-Ozone.config.widgetNames = ${widgetNames};
+    Ozone.config.user = ${user};
 
-Ozone.config.banner = ${bannerState};
+    Ozone.config.widgetNames = ${widgetNames};
 
-Ozone.config.currentTheme = ${currentTheme};
+    Ozone.config.banner = ${bannerState};
 
-Ozone.config.loginCookieName = ${Environment.current == Environment.DEVELOPMENT ? "null" : "'" + ozone.security.SecurityUtils.LOGIN_COOKIE_NAME + "'"};
+    Ozone.config.currentTheme = ${currentTheme};
 
-Ozone.config.prefsLocation = window.location.protocol + "//" + window.location.host + window.location.pathname + "prefs";
+    Ozone.config.loginCookieName = ${Environment.current == Environment.DEVELOPMENT ? "null" : "'" + ozone.security.SecurityUtils.LOGIN_COOKIE_NAME + "'"};
 
-Ozone.config.prefsLocation = Ozone.config.prefsLocation.replace(/\;jsessionid=.*/g,'');
+    Ozone.config.prefsLocation = window.location.protocol + "//" + window.location.host + window.location.pathname + "prefs";
 
-//for consistency add the properties onto the new OWF namespace
-var OWF  = OWF || {};
-OWF.config = Ozone.config;
-OWF.getContainerUrl = function() {
-    //figure out from preference location
-    var pref = Ozone.config.prefsLocation;
-    return pref.substring(0, pref.length - 6);
-};
+    Ozone.config.prefsLocation = Ozone.config.prefsLocation.replace(/\;jsessionid=.*/g,'');
+
+    //for consistency add the properties onto the new OWF namespace
+    var OWF  = OWF || {};
+    OWF.config = Ozone.config;
+    OWF.getContainerUrl = function() {
+        //figure out from preference location
+        var pref = Ozone.config.prefsLocation;
+        return pref.substring(0, pref.length - 6);
+    };
+
+    var ozoneOwfConfigProperties = {
+        //this value controls whether the OWF UI uses shims on floating elements, setting this to true will make
+        //Applet/Flex have less zindex issues, but browser performance may suffer due to the additional shim frames being created
+        useShims: false
+    };
+    
+    return _.extend({}, ozoneOwfConfigProperties, {
+        initialWidgetDefinitions: ${widgets},
+        initialDashboards: ${dashboards}
+    });
+});

@@ -15,7 +15,7 @@
  */
 define([
     'router',
-    'serverConfig',
+    'config',
     'collections/PersonalWidgetDefinitions',
     'collections/DashboardInstances',
     'comms/Constants',
