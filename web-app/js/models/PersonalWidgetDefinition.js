@@ -16,8 +16,9 @@
 
 define([
     'models/Model',
-    'models/WidgetDefinition'
-], function (Model, WidgetDefinition) {
+    'models/WidgetDefinition',
+    'lodash'
+], function (Model, WidgetDefinition, _) {
     'use strict';
 
     var PersonalWidgetDefinition = Model.extend({
@@ -39,11 +40,17 @@ define([
             "tags"
         ],
 
+        parse: function (resp) {
+            var val = resp.value;
+            val.guid = resp.path;
+            return val;
+        },
+
         initialize: function () {
             var widgetDefinition = this.get('widgetDefinition');
 
             //only create a widgetDef model if the widgetDef field isn't already a model
-            if (widgetDefinition != null && widgetDefinition.get == null) {
+            if (widgetDefinition && _.isFunction(widgetDefinition.get)) {
                 widgetDefinition = new WidgetDefinition(widgetDefinition);
                 this.set('widgetDefinition', widgetDefinition, { silent: true});
             }
@@ -57,11 +64,27 @@ define([
             if (this.attributes[attr] !== undefined) {
                 returnValue = this.attributes[attr];
             }
-            else if (this.attributes.widgetDefinition != null) {
+            else if (this.attributes.widgetDefinition) {
                 returnValue = this.attributes.widgetDefinition.get(attr);
             }
             return returnValue;
+        },
+
+        name: function () { return this.get('namespace') || this.get('originalName'); },
+
+        largeImage: function () { return this.get('imageUrlLarge'); },
+
+        description: function() { return this.get('description'); },
+
+        src: function () { return this.get('url'); },
+
+        guid: function () { return this.get('guid'); },
+
+        widgetType: function () {
+            var widgetTypes = this.get('widgetTypes');
+            return widgetTypes && widgetTypes.length ? widgetTypes[0].name : null;
         }
+
     });
 
     return PersonalWidgetDefinition;

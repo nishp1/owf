@@ -83,6 +83,10 @@ function(Model, WidgetStates, _) {
             // cache original layoutConfig config to avoid referencial chagnes
             // on save and fetch
             this.layoutConfig = this.get('layoutConfig');
+
+            if(_.isString(this.layoutConfig)) {
+                this.layoutConfig = JSON.parse(this.layoutConfig);
+            }
         },
 
         getLayoutConfig: function () {

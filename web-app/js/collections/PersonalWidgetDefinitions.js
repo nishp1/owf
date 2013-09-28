@@ -28,7 +28,7 @@ function(PersonalWidgetDefinition, Collection) {
         //currently logged in user.  This should be set in app.js
         all: null,
 
-        url: '/ozp/rest/owf/persons/me/widget-defs',
+        url: 'prefs/widgetList',
 
         model: PersonalWidgetDefinition,
 

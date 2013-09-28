@@ -24,7 +24,7 @@ function(DashboardInstance, Collection) {
 
     var DashboardInstances = Collection.extend({
 
-        url: '/ozp/rest/owf/persons/me/dashboard-instances',
+        url: 'dashboard',
 
         model: DashboardInstance
     });

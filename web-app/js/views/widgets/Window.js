@@ -15,7 +15,7 @@
  */
 
 define([
-    'serverConfig',
+    'config',
     'views/widgets/Panel',
     'views/widgets/WindowHeader',
     'mixins/widgets/ResizableWidget',
@@ -30,6 +30,7 @@ define([
     return Panel.extend(_.extend({}, ResizableWidget, {
 
         model: null,
+        
         className: 'widget window',
 
         HeaderClass: WindowHeader,
@@ -37,6 +38,8 @@ define([
         events: _.extend({}, Panel.prototype.events, {
             'resize': 'onResize'
         }),
+
+        useShims: Config.useShims,
 
         attributes: function() {
             var model = this.model;
@@ -74,7 +77,7 @@ define([
                     });
                 });
 
-            if(Config.useShims) {
+            if(me.useShims) {
                 me.$el.bgiframe(this.model.toJSON());
             }
     
@@ -106,7 +109,7 @@ define([
         onResize: function (evt, ui) {
             ResizableWidget.onResize.call(this, evt, ui);
 
-            if(ui && Config.useShims) {
+            if(ui && this.useShims) {
                 this.$el.bgiframe(_.extend({}, ui.size));
             }
         },

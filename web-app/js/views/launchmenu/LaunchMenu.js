@@ -19,20 +19,20 @@ define([
     'views/list/WidgetTileList',
     'events/EventBus',
     'collections/PersonalWidgetDefinitions',
-    // Libraries.
     'lodash'
 ], function (Modal, WidgetTileList, EventBus, PersonalWidgetDefinitions, _) {
     'use strict';
 
     return Modal.extend({
         id: 'launchMenu',
+
         className: 'modal hide fade',
 
         //this needs to be here to override the events from Modal.js - todo fix this
-        events:  {
-        },
+        events:  {},
 
         footer: false,
+
         removeOnClose: false,
 
         initialize: function () {
@@ -40,7 +40,7 @@ define([
 
             //filter the pwds to only standard widgets
             this.collection = new PersonalWidgetDefinitions(this.options.personalWidgetDefinitions.filter(function(model) {
-                return model != null && model.get("widgetType") === 'standard';
+                return model != null && model.widgetType() === 'standard';
             },this));
 
             //bind to add event
@@ -80,14 +80,6 @@ define([
             Modal.prototype.render.call(this);
             this.$body.html(this.tiles.render().$el);
             return this;
-        },
-
-        show: function () {
-            return Modal.prototype.show.call(this);
-            // Fetch the latest pwds.
-            // if (this.options.personalWidgetDefinitions) {
-            //     this.options.personalWidgetDefinitions.fetch({update: true, remove: true});
-            // }
         },
 
         launchWidget: function(model, opts) {

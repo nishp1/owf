@@ -37,12 +37,10 @@ define([
 
             var collection = this._collectionViewOpts.collection;
 
-            //when a model is added to the collection,
-            //add a view
+            //when a model is added to the collection, add a view
             this.listenTo(collection, 'add', _.bind(this.renderItem, this));
 
-            //when a model is removed from the collection,
-            //remove the view
+            //when a model is removed from the collection, remove the view
             this.listenTo(collection, 'remove', _.bind(this.removeItem, this));
 
             // remove each item view when view is removed
@@ -56,7 +54,6 @@ define([
         },
 
         renderCollection: function (options) {
-
             if (options != null) {
               this.initializeCollectionView(options);
             }
@@ -70,7 +67,7 @@ define([
             var viewFactory = this._collectionViewOpts.viewFactory;
             var view = viewFactory.call(this,widget);
 
-            if (view != null) {
+            if (view) {
                 $body.append(view.render().$el);
                 this.itemViewMap[widget.cid] = view;
             }
@@ -83,5 +80,6 @@ define([
                 delete this.itemViewMap[widget.cid];
             }
         }
+        
     };
 });

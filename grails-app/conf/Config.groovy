@@ -15,7 +15,8 @@ println "grails.config.locations = ${grails.config.locations}"
 //    grails.config.locations << "file:" + System.properties["${appName}.config.location"]
 // }
 grails.mime.file.extensions = false // enables the parsing of file extensions from URLs into the request format
-grails.mime.types = [ html: ['text/html','application/xhtml+xml'],
+grails.mime.types = [ 
+    html: ['text/html','application/xhtml+xml'],
     xml: ['text/xml', 'application/xml'],
     text: 'text-plain',
     js: 'text/javascript',

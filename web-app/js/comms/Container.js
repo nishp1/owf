@@ -162,7 +162,7 @@ define([
                 }
 
                 var id = getAttr(widget,'id') || getAttr(widget,'uniqueId');
-                var url = getAttr(widget,'widgetUrl') || getAttr(widget,'url');
+                var url = getAttr(widget,'src') || getAttr(widget,'url');
                 var generatedIdText = JSON.stringify({
                     id: id
                 });

@@ -26,8 +26,25 @@ function(Sync, Backbone, $, _) {
     
     var Model = Backbone.Model.extend({
 
+        /*
+         * {
+         *      create  : '/create',
+         *      read    : '/read',
+         *      update  : '/update',
+         *      delete  : '/delete'
+         * }
+         */
+        api: null,
+
         sync: function(method, model, options) {
-            return Sync.sync.apply(this, arguments);
+            // pick url from api if found
+            var api = _.result(model, 'api');
+
+            if(!options.url && api && api[method]) {
+                options.url = api[method];
+            }
+            
+            return Sync.sync.call(this, method, model, options);
         },
 
         // handle model attributes that are an instance of backbone's Model or Collection

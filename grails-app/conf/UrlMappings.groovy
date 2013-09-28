@@ -252,12 +252,12 @@ class UrlMappings {
         "/prefs/widgetList" ( controller:'personWidgetDefinition', action:'widgetList' )
 
         // Mapping for dashboard objects
-        "/dashboard/$guid?" {
+        "/dashboard/$guid?"(parseRequest:true) {
             controller = "dashboard"
             action = UrlMappings.getAction
         }
 
-        "/prefs/dashboard/$guid?" {
+        "/prefs/dashboard/$guid?"(parseRequest:true) {
             controller = "dashboard"
             action = UrlMappings.handleDashboardAction
         }

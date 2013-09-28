@@ -32,9 +32,7 @@ define([
 
         attributes: function () {
             var model = this.model,
-                    iframeAttrs = null;
-
-            iframeAttrs = commsContainer.getIframeAttributes(model);
+                iframeAttrs = commsContainer.getIframeAttributes(model);
 
             return _.extend({
                 'frameborder': 0,

@@ -25,7 +25,7 @@ define([
     'use strict';
 
     var tpl =
-        '<img src="{{icon-src}}" class="header-icon"/>' +
+        '<img src="{{icon}}" class="header-icon"/>' +
         '<ul class="actions nav">' +
             '{{{btnTemplate}}}' +
             '<li class="close-li">' +
@@ -56,7 +56,7 @@ define([
         $name: null, //Editable name span
 
         render: function() {
-            this.$el.html( this.template(this.createTemplateModel()) );
+            this.$el.html(this.template(this.data()));
 
             this.$name = this.$el.children(".name-content").children("span.name");
 
@@ -67,12 +67,12 @@ define([
             return this;
         },
 
-        createTemplateModel: function() {
-            var templateModel = this.model.toJSON();
-
-            templateModel.btnTemplate = this.btnTemplate;
-            
-            return templateModel;
+        data: function() {
+            return {
+                name: this.model.name(),
+                icon: this.model.headerIcon(),
+                btnTemplate: this.btnTemplate
+            };
         },
 
         initEditable: function () {

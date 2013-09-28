@@ -54,19 +54,12 @@ define([
         sync: $.noop,
 
         _initPwd: function() {
-            if (this.attributes.widgetGuid != null && PersonalWidgetDefinitions.all != null) {
-                //find the related pwd and cache
-                if (this.personalWidgetDefinition == null) {
-                    this.personalWidgetDefinition = PersonalWidgetDefinitions.all.find(function (pwd) {
-                        var wDef = pwd.get('widgetDefinition');
-                        if (wDef != null) {
-                            return wDef.id === this.attributes.widgetGuid;
-                        }
-                        else {
-                            return false;
-                        }
-                    }, this);
-                }
+            //find the related pwd and cache
+            if (this.attributes.widgetGuid && PersonalWidgetDefinitions.all
+                    && !this.personalWidgetDefinition) {
+                this.personalWidgetDefinition = PersonalWidgetDefinitions.all.find(function (pwd) {
+                    return pwd.guid() === this.attributes.widgetGuid;
+                }, this);
             }
         },
 
@@ -81,10 +74,13 @@ define([
                 this._initPwd();
 
                 //if there was a pwd then return the requested field
-                if (this.personalWidgetDefinition != null) {
-                    returnValue = this.personalWidgetDefinition.get(attr);
+                if (this.personalWidgetDefinition) {
+                    returnValue =   this.personalWidgetDefinition[attr] ?
+                                    this.personalWidgetDefinition[attr]() :
+                                    this.personalWidgetDefinition.get(attr);
+
                     //if attribute was not on the pwd then check the widgetDef
-                    if (returnValue == null) {
+                    if (returnValue === undefined) {
                         var widgetDef = this.personalWidgetDefinition.get('widgetDefinition');
                         if (widgetDef != null) {
                             returnValue = widgetDef.get(attr);
@@ -95,9 +91,21 @@ define([
             return returnValue;
         },
 
+        src: function () {
+            return this.get('src');
+        },
+
+        name: function () {
+            return this.get('namespace') || this.get('originalName');
+        },
+
+        headerIcon: function () {
+            return this.get('headerIcon') || this.get('smallIconUrl');
+        },
+
         hasWidgetDefinition: function(){
             this._initPwd();
-            return this.personalWidgetDefinition != null && this.personalWidgetDefinition.get('widgetDefinition') != null;
+            return !!this.personalWidgetDefinition;
         }
     },
     {

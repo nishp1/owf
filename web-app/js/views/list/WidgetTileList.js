@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 define([
-    'models/WidgetState',
     'views/list/List',
     'views/list/WidgetTile',
     'mixins/containers/SortableCollectionView',
-    'util/containerUtil',
-    // Libraries.
     'jquery',
     'lodash'
-], function (WidgetState, List, WidgetTile, SortableCollectionView, ContainerUtil, $, _) {
+], function (List, WidgetTile, SortableCollectionView, $, _) {
     'use strict';
 
     return List.extend(_.extend({}, SortableCollectionView, {
@@ -33,8 +30,7 @@ define([
         listItemView: WidgetTile,
 
         events: _.extend({}, List.prototype.events, {
-            //todo this is a click for now until the launch btn is implemented
-            'click > .widgetTile': 'onWidgetDblClick'
+            'dblclick > .widgetTile': 'onWidgetDblClick'
         }),
 
         render: function () {
@@ -52,18 +48,9 @@ define([
         onWidgetDblClick: function (evt) {
             var currentTarget = $(evt.currentTarget),
                 view = currentTarget.data('view'),
-                cloned = view.model.clone(),
-                widgetStateModel = null;
-
-            //create a new id
-            cloned.id = ContainerUtil.guid();
-            cloned.set('id', cloned.id);
-
-            //create a new wigetstatemodel
-            widgetStateModel = WidgetState.createFromPersonalWidgetDefinition(cloned);
-
-
-            this.trigger('launchMenu:launchWidgetStart', widgetStateModel, {
+                model = view.model;
+            
+            this.trigger('launchMenu:launchWidgetStart', model, {
                 byDragDrop: false
             });
         }

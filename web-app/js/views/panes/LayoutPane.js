@@ -90,9 +90,8 @@ define([
         doLayout: $.noop,
 
         launchWidget: function(model, opts) {
-
             //set view specific defaults
-            if (this.modelDefaults != null) {
+            if (this.modelDefaults) {
                 _.defaults(model.attributes, _.result(this,'modelDefaults'));
             }
 

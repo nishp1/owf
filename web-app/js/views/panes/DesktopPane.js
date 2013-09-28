@@ -91,16 +91,15 @@ define([
             var active = widget.get('active');
 
             if (active) {
-
                 //bring active widget to front
-                if (this.itemViewMap[widget.cid] != null) {
-                  this.zIndexManager.bringToFront(this.itemViewMap[widget.cid]);
+                if (this.itemViewMap[widget.cid]) {
+                    this.zIndexManager.bringToFront(this.itemViewMap[widget.cid]);
                 }
 
                 //deactivate all other widgets
-                this.collection.each(function (widg) {
-                    if (widget !== widg) {
-                        widg.set('active', false);
+                this.collection.each(function (model) {
+                    if (widget !== model) {
+                        model.set('active', false);
                     }
                 });
             }

@@ -26,7 +26,13 @@ function(Backbone, Dashboard, _) {
 
     var DashboardInstance = Dashboard.extend({
 
-        urlRoot: '/ozp/rest/owf/persons/me/dashboard-instances',
+        urlRoot: 'dashboard',
+
+        api: function () {
+            return {
+                update: 'prefs/dashboard/' + this.id
+            };
+        },
 
         fields: [
             "name",
@@ -52,6 +58,8 @@ function(Backbone, Dashboard, _) {
 
         initialize: function () {
             Dashboard.prototype.initialize.apply(this, arguments);
+
+            this.id = this.get('guid');
             
             var lastAccessed = this.get('lastAccessed');
             if(_.isString(lastAccessed)) {

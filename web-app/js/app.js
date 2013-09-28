@@ -56,7 +56,10 @@ function (
     'use strict';
 
     // create a collection of dashboards from initial data
-    var personalWidgetDefinitions = new PersonalWidgetDefinitions(ServerConfig.initialWidgetDefinitions);
+    var personalWidgetDefinitions = new PersonalWidgetDefinitions(ServerConfig.initialWidgetDefinitions, {
+        parse: true,
+        silent: true
+    });
 
     //set the special 'all' pwd collection which represents all the pwds the current user has access too
     PersonalWidgetDefinitions.all = personalWidgetDefinitions;

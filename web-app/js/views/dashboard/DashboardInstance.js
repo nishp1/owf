@@ -29,16 +29,19 @@ define([
     'views/widgets/FloatingWidget',
     'views/widgets/WidgetControlIframe',
     'collections/WidgetStates',
+    'models/WidgetState',
     'mixins/dashboard/ConstrainWidgets',
     'services/CollectionViewService',
     'services/ZIndexManager',
+    'util/containerUtil',
     'jwerty',
     'backbone',
     'lodash',
     'jquery'
 ], function (AccordionPane, DesktopPane, FitPane, TabbedPane, PortalPane, LayoutPane, View, HBox,
              VBox, Pane, BoxPane, WidgetWindow, FloatingWidget, WidgetControlIframe, WidgetStates,
-             ConstrainWidgets, CollectionViewService, ZIndexManager, jwerty, Backbone, _, $) {
+             WidgetState, ConstrainWidgets, CollectionViewService, ZIndexManager, ContainerUtil, 
+             jwerty, Backbone, _, $) {
 
     'use strict';
 
@@ -198,29 +201,32 @@ define([
             View.prototype.remove.call(this);
         },
 
-        launchWidget: function (model, opts) {
-            var deferred = $.Deferred();
+        launchWidget: function (pwdModel, opts) {
+            var deferred = $.Deferred(),
+                model;
+
+            pwdModel = pwdModel.clone();
+            pwdModel.id = ContainerUtil.guid();
+            pwdModel.set('id', pwdModel.id);
+
+            model = WidgetState.createFromPersonalWidgetDefinition(pwdModel);
 
             //set dashboardGuid property to reference this dashboard
             model.set('dashboardGuid', this.model.id || this.model.cid);
 
             //todo validate here there can be only one singleton widget open
-//            if (model.get('isSingleton')) {
-//
-//            }
+            // if (model.get('isSingleton')) {
 
-            //check if there is a widgetUrl
-            if (model.get('widgetUrl') == null) {
+            // }
 
-                //show some error here?
+            if (!model.src()) {
                 deferred.reject(model, opts);
             }
-//            else if (model.get('isBackground')) {
-//
-//            }
+            // else if (model.get('isBackground')) {
+
+            // }
             //todo floating widgets?
             else {
-
                 //check if there is only one pane if so then just launch
                 if (this.views.length === 1 && this.views[0] instanceof LayoutPane) {
                     var paneView = this.views[0];
@@ -238,18 +244,12 @@ define([
                     });
                 }
             }
-
-
             return deferred.promise();
         },
 
-        shim: function () {
+        shim: function () {},
 
-        },
-
-        unshim: function () {
-
-        },
+        unshim: function () {},
 
         selectPane: function (opts) {
             var me = this,

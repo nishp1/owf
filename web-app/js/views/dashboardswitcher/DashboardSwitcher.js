@@ -144,7 +144,7 @@ function(SwitcherTile, DashboardInstance, Stack, Collection, View, Modal, Warnin
             
             // Fetch the latest dashboards, after saving current state.
             if (this._syncDashboardsOnOpenClose && dashboardInstances) {
-                dashboardInstances.fetch({parse: true, update: true, remove: true, merge: false});
+                //dashboardInstances.fetch({parse: true, update: true, remove: true, merge: false});
             }
 
             // Re-enable sync on show.
@@ -205,11 +205,11 @@ function(SwitcherTile, DashboardInstance, Stack, Collection, View, Modal, Warnin
 
             // Push to the backend if necessary.
             if (this._syncDashboardsOnOpenClose) {
-                this.options.dashboardInstances.sync('update', this.options.dashboardInstances, {
-                    parse: true,
-                    update: true,
-                    remove: true
-                });
+                // this.options.dashboardInstances.sync('update', this.options.dashboardInstances, {
+                //     parse: true,
+                //     update: true,
+                //     remove: true
+                // });
             }
         },
 

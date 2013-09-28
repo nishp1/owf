@@ -42,8 +42,8 @@ define([
         launchWidget: function(model, opts) {
 
             //set view specific defaults
-            if (this.modelDefaults != null) {
-              _.defaults(model.attributes, _.result(this,'modelDefaults'));
+            if (this.modelDefaults) {
+                _.defaults(model.attributes, _.result(this, 'modelDefaults'));
             }
 
             //since a fit pane can only have one widget replace the current one if there is one
